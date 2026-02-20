@@ -1,0 +1,388 @@
+Purdue_Daily_work2026
+
+
+--------------------------------------------------------------------------------------------------------------------------
+02/20/2026
+--------------------------------------------------------------------------------------------------------------------------
+
+Database
+	digital filing system for application
+
+
+Data?
+	Data is raw information stored in the database
+
+Note: Data has no meaning until structure is applied
+
+Banking: 
+	10000
+	2026-02-01
+	SAVINGS
+
+Table (Structured storage)	
+
+	Table organized data into
+		- Rows (Records)
+		- Columns (field)
+
+	Schema ?
+		A schema is logical namespace that groups database objects
+
+	Large application:
+		ecommerce_db
+			auth --> users, roles
+			order --> orders, order_items
+			inventory	-- products, stocks
+
+
+	Query
+		A Query is request to the database to:
+			- Read data
+			- Insert data
+			- Update data
+			- Delete data
+
+		SQL - language to query 
+
+	Index:
+		An index is data structure that improves query speed
+
+
+	View:
+		A view is saved query that behaves like a table
+			- View doesn't stored data
+
+
+Database types:
+----------------
+
+	RDBMS
+		Stores data in:
+			- Table (rows and columns)
+			- Uses relationships (PK, FK)
+			- Consistancy (ACID property)
+
+		Data is structured and strongly consistent
+
+		Example:
+			- MySQL, PostgreSQL, Oracle, SQL Server etc
+
+
+	NoSQL Database (Non-Relational)
+
+		- Do not use fixed tables
+		- Designed for
+			- scalable
+			- Flexible
+			- High availability
+
+		Types:
+			- Key-value
+			- Document 
+			- Columnar
+			- Graph
+
+		Example:
+			- MongoDB
+			- Cassandra
+			- DynamoDB
+			- Redis (in-memory db store)
+
+	In-Memory Database
+		Stoers data directly in RAM, not disk
+
+	Distributed Database
+		Data stored
+			- Across multiple machines
+			- Across regions/ data centers
+
+		Designed for:
+			- Higher availability
+			- Fault tolerance
+			- Horizonal scalability
+
+
+	Cloud  database
+		- Managed by cloud provider
+		- No server maintainance
+		- Auto sclaling, backups
+
+	Example:
+		Amazon RDS
+		Azure SQL
+		Google Cloud SQL
+		Firebase
+
+
+	Document Database 
+		- JSON/BSON documents 
+		- Each document is self-contained 
+
+	Examples:
+		- MongoDB
+		- CouchDB
+		- Firestores
+
+
+CRUD  Operations
+	C - Creation
+	R - Read
+	U - Update
+	D - Delete
+
+
+UI --> API --> DB query on DB
+
+RDBMS
+	
+	- Data stored in rows and columns
+	- Tables are related to each other
+	- Uses SQL 
+	- Enforces data integrity rules
+	- supports transactions using ACID
+
+Features:
+	- Table based storage
+	- Relationship between tables
+
+		- ALl tables are connected using primary keys and foreign keys
+
+	- Data Integrity
+		RDBMS enforces rules that ensures
+			- No duplicate records
+			- No missing mandatory values
+			- No invalid relationships
+
+		Protects data quality at db level
+
+	- ACID compliance
+
+		A - Atomicity - All or nothing
+
+		C - Consistency - Valid state before and after	
+		I - Isolation - Transactions do not interfere
+		D - Durability - Data is permanenty saved
+
+	- Security and Access control
+
+		Ensures only authorized users can access or modify data.
+
+	- Scalability and Reliability
+		- Handles large volumes of data
+		- Supports multiple concurrent users
+		- Provide backup and recovery mechanisms
+
+
+super key:
+	 A super key is any single column or combination of columns that can uniquely identify a record in a table.
+
+	 It gurrangtee uniqueness, it is super key  
+
+	 - Uniquely identify each row
+	 - May contains one more columns
+	 - May include redundant columns
+	 - A table may have many super keys
+
+	Conceptual identification, not necessarily be implemented
+
+
+	Employee
+		employee_id, email, phone
+
+	Possible super keys:
+		- employee_id
+		- email
+		- (employee_id, emaid)
+		- (employee_id, phone)
+
+Candidate key - Minimal super key (no redundancy)
+	
+Composite key -> primary key having multiple columns
+
+
+	ERD - Entity Relationship Diagram 
+
+		Visual representation of a database design that shows:
+			- What data is stored (entities)
+			- How data is described (attributes)
+			- How data is connected (relationships)
+
+		ERD Acts as blueprint of database before it is implemented.
+
+	Why ?
+		- Helps to udnerstand business requirements
+		- Improves communication between technical and non-technical stakeholders
+		- Reduce design errors
+		- Serves as documentation for database structure
+		- Helps convert business logic into database schema.
+
+
+Key components of ERD
+	1. Entity
+		Real world object or concept that has independent existence and about which data is stored in database
+
+		Each entity ususally becomes table in database
+
+
+		Types of entity:
+			a. Strong entity
+
+				Entity that 
+					- exist independently
+					- Has its own primary key
+					- Doesn't depend on any other entity for its existance
+
+
+			b. weak entity
+
+				Entity that
+					- Cannot exist independently
+					- Depends on a strong entity for its existance
+					- Doesn't have a complete primary key on its own
+
+				Example:
+					- OrderItem (depends on Order)
+					- Invoice LI (depends on Invoice)
+
+			c. associative entity
+				Entity created to:
+					- Resolve relationships as a table
+					- contains foreign keys from participating entities
+					- may contains additional attributes
+
+				Enrollment
+				Student - Course
+
+
+				Student 		course			student_course(join table)
+												student_id course_id
+
+				Order_Product
+
+
+
+	2. Attribute
+		An Attribute is a property or characteristics that describes an entity
+
+		Examples:
+			- StudentName
+			- EmployeeSalary
+			- ProductPrice
+
+
+		Attribute becomes columns in table
+
+		1. Simple Attribute
+			- Atomic
+			- Indivisible
+			- Can not be brokendown further
+
+		Ex:
+			Age, Salary, Gender
+
+		2. Composite Attribute
+			Can be broken down into smaller sub-attributes
+
+			Name --> First Name, Last Name
+			Address --> Street, City, State, ZIP
+
+		3. Derived Attribute
+			- Calculated from another attributes
+			- Usually not stored physically
+
+		Ex: Age (derived from DOB)
+			- Total Amount (Derived from qty * price)
+
+		4. Multivalued attribute
+			- Hold multiple values for single entity
+
+			Ex. Phonenumbers (1,2,3)
+			- email_add(..,..,..)
+			- skills(..,..,..,)
+
+			Multiple attribute handling as separate table
+
+		5. Single valued atttribe
+			- Exactly one value for an entity
+
+			Ex: 
+				DOB
+				EmpId
+				SSN
+
+
+	3. Relationship
+
+		Cardinality
+			- Number of instances of one entity associated with another
+
+			1. One-One-One (1:1)
+
+				One entity is related exlactly one instance of another entity
+
+				Person - Passport
+				User - Profile
+
+
+			- Often merged into single table 
+
+			2. One-To-Many (1:M)
+				One entity is related to multiple instances of another entity
+
+				customer - Orders
+
+				Department - Employees
+
+				This is most common used
+
+			- Often managed as separate columns as FK constraint
+
+			3. Many-to-Many(M:M)
+				Multiple instances of one entity is associated with multiple instances of another entity
+
+				Student <-> Course
+				Product <-> Order
+
+			- Often manged as separate join table
+
+
+ER Models
+	
+	ER models are created different level of abstraction during database design
+
+	Each level represent specific purpose and audiance:
+
+	1. Conceptual ER Model
+		High level business view of data
+
+		Focus
+			- what data is needed, and how it stored
+
+
+
+	2. Logical ER Model
+
+			Detailed, structured view of data, while independent of any specific DBMS
+
+			converts business req -> structured data model
+			Defines Attributes, keys, relationships
+
+			Still DBMS Independent
+
+	3. Physical ER Model	
+
+			Actual implementaiton of db - specific DBMS
+
+		It transplate model attribute, entity --> table, columns and constraints in db
+
+
+
+Styles
+	1. Chen Style
+		Orinal and most academic ER modelling notation
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------
+
