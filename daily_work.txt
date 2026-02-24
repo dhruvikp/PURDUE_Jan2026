@@ -1,4 +1,334 @@
 Purdue_Daily_work2026
+https://github.com/dhruvikp/PURDUE_Jan2026
+
+
+--------------------------------------------------------------------------------------------------------------------------
+02/24/2026
+--------------------------------------------------------------------------------------------------------------------------
+Agenda:
+	- MySQL Fundamentals (What, Why, How, Features, Benefits, usecase)
+	- Creating and managing DB
+	- DataTypes, Operators
+	- Constraints
+	- Altering tables
+
+
+MySQL
+
+	MySQL is opensource RDBMS used to store, organize, and manage structured data efficiently.
+
+	Key Characteristics:
+		- Opensource and free to use
+		- Relational
+		- Uses SQL 
+		- Cross-platform (Windows, Linux, MacOs)
+		- Widely adopted in web and enterprise applications
+
+WHy?	
+- Free to use
+- high performent 
+- Reliable and stable - ACID
+- Scalable - 
+- Wide language and tool support  (Java/Python/Nodejs, .net...)
+
+How?
+	MySQL Follows client-server architecture
+
+	Client - Sends reqeust	
+	Server - Process those request and return resp back to the client
+
+	WHy client-server archi. is important?
+		- Multiple users can connect simultaneously
+		- Centralized data management
+		- Security and control
+		- Better for scalability
+
+
+	What is MySQL Client?
+		MySQL Client is any DB application or tool used to connect to the MySQL Server and sends SQL Commands
+
+
+		ANy tool (Workbench - GUI tool)
+		Command line tool - MySQL
+		Third party tools (Dbeaver)
+		nodejs
+		java
+		python
+		..
+		..
+
+	What is MySQL Server
+		Core software component
+			- Stores data
+			- Processes SQL Queries
+			- Manage USers and permissions
+			- ENsures data integrity and security
+
+
+			3306 - port
+			username - root
+			password - admin@123
+
+
+Recommending Naming Rules:
+	- Use Lowercase letters
+	- Use _ instead of spaces
+	- Avoid special characters
+	- Avoid using any MySQL reserved keywrods
+	- use meaningful descriptive names
+
+	Ex. employee_db
+		ecommerce_app
+
+
+	Bad names:
+		EmployeeDB
+		sales-db
+		123Db
+
+
+===========
+MySQL Data Types
+
+	- Column - type
+		- What kind of data a column can store
+		- How much storage space it will use
+
+
+Broad categories:
+	1. Numeric Data types
+
+		a. TINYINT 	- Storage: 1 byte 
+					- Range(Signed) : -128 to 128
+
+		b. SMALLINT - Storage: 2 byte
+					- Range : -32768 to 32767
+
+
+		c. MEDIUMINT 	- Storage: 3 bytes
+						- Range: -8388608 to 8388608
+
+
+		d. INT 	- Storage: 4 bytes
+				- Range: -2147483648 to 2147483648
+
+		e. BIGINT 	- Storage: 8 bytes
+					- Very large range
+
+	2. Decimal (Floating point and fixed point)
+
+		FLOAT:		- Approximate decimal values
+					- Less precise
+					- Faster calculations
+
+		DOUBLE		- More precision than Float
+					- Approximate values
+
+
+		DECIMAL 	- Exact decimal values
+					DECIMAL(10,2)			-- 55.22
+
+	3. String data types
+
+		CHAR(m)		- Fixed-length string
+					- Always occupies m characters
+
+				Ex: Country codes, 
+
+		VARCHAR(m)	- Variable-length string
+					- Uses only required space
+
+					VARCHAR(100) --> 
+
+		TEXT 		- Stores large text data
+					- Not suitable for indexing fully
+
+					Ex: blog posts, product descriptons, comments
+
+		BLOB		- Stores binary data
+					- Images, files, PDFs
+
+					TINYBLOB -
+					MEDIUMBLOB -
+					LONGBLOB -
+
+		ENUM 		- Allows a column to store one value from a predefined list
+					Ex. PLACED, SHIPPED, DELIVERED			
+
+	4. Date and Time Data types
+
+		DATE 		- Stores date only
+					- Format:  YYYY-MM-DD
+
+					Ex. DOB
+
+		TIME		- Stores time only
+					Usecase: Duration, workign hours
+
+		DATETIME 	-Stores Date and 
+					- INdependent of timezone
+
+					Ex: OrderCreationDate--
+
+		TIMESTAMP 	- Store date and time
+					- Timezone aware
+
+
+
+	5. Boolean data types
+
+		MySQL doesn't have BOOLEAN type
+		TINYINT(1) --> 0/1
+
+============================
+
+	Operators
+		Arithmatic operators: +, -, *, /, %
+
+			SELECT p.price + 100 from products p;
+
+		Comparision Operators:
+			- Compare two avalues --> return true or false
+				=, !=, >, <, >=, <=, BETWEEN (Range check), IN (Multiple value check),  LIKE, IS NULL
+
+			select * frpom products p where p.price = 1000;
+
+
+		Logical Operators
+			AND
+			OR
+			NOT
+
+			ex. select * from products where (price > 500 AND quantity>0) OR name like '%iphone%';
+
+			Order:
+				- NOT
+				- AND
+				- OR
+
+		Bitwise Operators:
+			&, ^, ~, <<,>>
+
+
+
+Constraints:
+	- PRIMARY KEY 
+	- NOT NULL
+	- UNIQUE (prevents duplicate values, allows null)
+	- DEFAULT (Assigns default value if no value is provided)
+	- CHECK (enforce condition on column values, implement business rules at db level)
+	- Foreign Key constraint
+		- Establish relationshp between tables
+		- Enforces referencial integrity
+		- Prevents orphan records
+
+	create table employees (
+		emp_id INT PRIMARY KEY,
+	    emp_name varchar(50) NOT NULL,
+	    email varchar(100) unique,
+	    age int check (age>=18),
+	    salary DECIMAL(10,2) check (salary >0),
+	    dept_id int,
+	    satus varchar(20) default 'ACTIVE',
+	    
+	    FOREIGN KEY (dept_id) references departments(dept_id)
+    );
+
+    create table departments(
+		dept_id int primary key,
+		dept_name varchar(50)
+	);
+
+
+	Alter tables:
+
+		Used to change structure of existing table without deleting the table itself.
+
+		Capability:
+			- Add new columns
+			- Modify existing columns
+			- Rename columns
+			- Delete Columns
+			- Add constraints
+
+
+		SQL:
+		create database employee_db;
+show databases;
+use employee_db;
+drop database test_db;
+
+DROP TABLE  employees;
+create table employees (
+	emp_id INT PRIMARY KEY,
+    emp_name varchar(50) NOT NULL,
+    email varchar(100) unique,
+    age int check (age>=18),
+    salary DECIMAL(10,2) check (salary >0),
+    dept_id int,
+    satus varchar(20) default 'ACTIVE',
+    
+    FOREIGN KEY (dept_id) references departments(dept_id)
+    );
+    
+create table departments(
+dept_id int primary key,
+dept_name varchar(50)
+);
+    
+    
+create table orders(
+order_id int primary key,
+status varchar(20) default 'PLACED',
+created_date DATE
+);
+    
+  desc employees;  
+
+
+
+create table employee_1(
+emp_id int primary key,
+emp_name varchar(50),
+salary decimal(10,2)
+);
+
+
+ALTER TABLE employee_1
+	add age int;
+    
+ alter table employee_1
+ add status varchar(20) default 'active';
+
+
+alter table employee_1
+rename column emp_name to employee_name;
+
+alter table employee_1
+drop age;
+
+alter table employee_1
+add primary key (emp_id);
+
+alter table employee_1
+add unique (employee_name);
+
+alter table employee_1
+modify employee_name varchar(50) not null;
+
+drop table employee_1;
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 --------------------------------------------------------------------------------------------------------------------------
@@ -380,6 +710,7 @@ ER Models
 Styles
 	1. Chen Style
 		Orinal and most academic ER modelling notation
+		
 
 
 
