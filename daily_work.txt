@@ -2,6 +2,220 @@ Purdue_Daily_work2026
 https://github.com/dhruvikp/PURDUE_Jan2026
 
 
+
+--------------------------------------------------------------------------------------------------------------------------
+02/26/2026
+--------------------------------------------------------------------------------------------------------------------------
+Agenda:
+DML
+	- Select (DQL)
+	- Insert
+	- Update
+	- Delete
+
+DCL
+	- Create user, assign user with permission, revoke permission
+
+TCL:	
+	- Start Transaction, Commit, Rollback, SavePoint, Rollback to save point, Release SavePoint
+
+Select with different conditions
+	- Select (Distinct, by, like, case, as, limit, between, where)
+
+Joins:
+	- Inner, Left Outer, Right Outer, Full Outer, Cartesian Join
+
+
+
+--------
+	DML- Data Manipulation language
+
+		Set of SQL commands used to retrieve, insert, modify and remove data from database tables.
+
+		DML works on data inside tables, no on table structure.
+
+		Common commands:
+			SELECT --> Read data
+			INSERT --> Add new Data
+			UPDATE -->  Modify Existing data
+			DELETE --> REmove data 
+
+			TRUNCATE - Removes all rows
+							- where not allowed
+							- faster 
+							- cannot rollbacked
+
+
+DCL - Data Control Language
+	
+	Set of SQL commands used to control access to the database.
+
+	DCL defines:
+		- Who can access the database?
+		- What actions they are allowed to perform?
+		- What actions they are restricted from?
+
+	DCL mainly used for security and access management.
+
+	CREATE USER --> Creaet DB User
+	GRANT --> Assign Permissions
+	REVOKE --> REmove persmissions
+
+
+	CREATE USER 'username'@'host' IDENTIFIED BY 'password'
+
+	GRANT - Assign permissions to the user
+
+		Tyeps of permissions:
+			SELECT
+			INSERT
+			UPDATE
+			DELETE
+			CREATE
+			DROP
+			ALL
+
+		GRANT SELECT,INSERT ON employee_db.* TO 'app_user'@'localhost'
+
+		REVOKE - Used to remove previously granted permissions from a user.
+
+		Used when:
+			- User role changes
+			- security permissions changes
+			- user access needs restrictions
+
+		REVOKE previlege on database.table from 'user'@'host'
+
+		DROP USer
+
+--------------------
+TCL (Transaction Control Language) Statements:		
+	
+	set of SQL commands used to manage transactions in a database.
+
+	Transaction follows ACID properties
+
+		- Maintain data consistency
+		- Ensures reliability
+		- Prevents partial updates
+		- Supports error handling
+		- Enable rollback in case of failure
+
+START TRANSACTION
+
+	-- Money deducted from one account
+	-- Money added to another account
+
+COMMIT; // ROLLBACK;
+
+
+SAVEPOINT
+	creates checkpoints inside a transaction.
+
+	It allows:
+		- Partial rollback
+		- More control inside long transactions
+
+	SAVEPOINT savepoint_name;
+
+	ROLLBACK TO SAVEPOINT sp_name;
+
+		- Rollback only changes made after savepont
+		- Keeps changes before the savepoint intact
+
+	RELEASE SAVEPOINT
+		- removes a savepoint permanently
+
+	After release:
+		- cannot rollback to that savepoint
+		- savepoint name is freed
+
+
+	Notes;
+		- DDL statements cause implicit commit
+
+		DISTINCT - Removes department names
+		LIKE - search for patterns in text data
+
+				Wildcards:
+					% - Any number of characters
+					_ - Exactly one character
+
+		CASE
+			Apply conditional logic inside SELECT Query
+
+
+			select column,
+			CASE
+				WHEN condition THEN result
+				ELSE result
+
+			END as alias
+			FROM table_name;
+
+		SELECT with IF statement
+			simpler condition logic compared to CASE
+
+
+		SELECT IF (condition, true_value, false_value) as alais from table_name;
+
+		SELECT with Alias (AS)
+		 	Rename columns or expressions temporarily in result set.
+
+		 	SELECT column as alias_name from table_name;
+
+
+		SELECT with BETWEEN
+			Filter values within a range (inclusive)
+
+		Combine WHERE with other conditions
+
+
+JOINs
+	A Join is used to combine rows from two ore more tables based on related column.
+
+	In our case:
+		employees.dept_id
+		department.dept_id
+
+INNER JOIN
+	returns only those records where matching values exist in both tables.
+
+LEFT OUTER JOIN
+	- All records from LEFT table (employees)
+	- Matching records from the RIGHT table (departments)
+	- NULL where no department exist
+
+RIGHT OUTER JOIN
+	- All records from the RIGHT table (departments)
+	- Matching records from LEFT table (employees)
+	- Null where no employee exists
+
+
+FULL OUTER JOIN
+	- All employees
+	- All departments
+	- Matches where available
+	- Null where no match exist
+
+	MySQL doesn't support FULL OUTER JOIN directly
+
+	We simulate it using LEFT JOIN + RIGHT JOIN + UNION
+
+
+Cartesian JOIN (CROSS JOIN)
+	Produce every possible combination of rows from both tables.
+
+	Ex:
+		empyees table = 10 rows
+		depatments table = 4 rows
+
+		Result = 40 rows
+	= No join condition used
+	- Each employees is paird with every department
+	- Usually not desired in real applications
+
+
 --------------------------------------------------------------------------------------------------------------------------
 02/24/2026
 --------------------------------------------------------------------------------------------------------------------------
