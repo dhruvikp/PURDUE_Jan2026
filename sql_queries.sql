@@ -211,7 +211,7 @@ INSERT INTO employees (emp_id, emp_name, email, age, salary, dept_id, satus) val
 (4, 'Neha', 'neha@simplilearn.com', 29, 50000, NULL, 'active'),
 (5, 'Amit', 'amit@simplilearn.com', 35, 70000, 30, 'active');
 
-
+commit;
 -- INNER JOIN
 SELECT 
 	e.emp_id,
@@ -273,11 +273,114 @@ SELECT
 -- CROSS JOIN
 select e.emp_name, d.dept_name from employees e cross join departments d;
 
+select * from employees;
+select * from departments;
+
+############################### STORED PROCEDURE ######################
+-- create SP to add new employee and return total employee count
+
+DELIMITER //
+CREATE PROCEDURE add_employee_sp(
+	IN p_emp_id INT,
+    IN p_emp_name VARCHAR(50),
+    IN p_email VARCHAR(100),
+    IN p_age INT,
+    IN p_salary DECIMAL(10,2),
+    IN p_dept_id INT,
+    IN p_status VARCHAR(20),
+    OUT total_employees INT
+)
+
+BEGIN
+	-- INSERT new EMPLOYEE IN DB
+	insert into employees (emp_id, emp_name, email, age, salary, dept_id, satus)
+    VALUES
+    (p_emp_id, p_emp_name, p_email, p_age, p_salary, p_dept_id, p_status);
+    
+	-- GET total employee count
+    select count(*) into total_employees from employees;
+END //
 
 
+call add_employee_sp(6, 'Rohit', 'rohit@simplilearn.com', 30, 65000, 10, 'ACTIVE', @emp_count);
+
+select @emp_count as total_employees;
+
+-- ---------
+show procedure status;
+drop procedure if exists add_employee;
 
 
+-- Stored procedure salary_summary
 
+DELIMITER //
 
+create procedure salary_summary()
+	BEGIN
+		SELECT
+        count(emp_id) as total_employees,
+        sum(salary) as total_salary,
+        avg(salary) as average_salary,
+        max(salary) as highest_salary,
+        min(salary) as lowest_salary
+		
+        from employees;
+    END //
 
+call salary_summary();
+
+-- employee age category
+
+DELIMITER //
+create procedure employee_age_category()
+	begin
+		select
+			emp_name,
+            age,
+            case
+				when age<25 then 'Junior'
+                when age between 25 and 35 then 'Mid-level'
+                else 'Senior'
+			END AS age_category
+		From employees;
+	end //
+    
+call employee_age_category();
+-- ############### VIEW ####################
+
+CREATE  VIEW vw_employee_details AS
+	SELECT 
+		e.emp_id,
+        e.emp_name,
+        e.email,
+        e.salary,
+        e.satus,
+        d.dept_name
+	FROM employees e
+    LEFT JOIN departments d
+    on e.dept_id = d.dept_id;
+
+select * from vw_employee_details where emp_name = 'Rahul';
+
+# alter view vw_employee_details as
+#Drop view vw_employee_details;
+
+## -------- SUBQUERY ---------------##
+-- single -value subquery
+select * from employees where dept_id = (select dept_id from departments where dept_name = 'IT');
+
+-- Multi-row subquery
+select * from employees where dept_id IN (select dept_id from departments where dept_name IN ('IT','HR'));
+
+-- Correlated subquery
+select emp_name, salary, dept_id from employees e where salary > (select avg(salary) from employees where dept_id = e.dept_id)
+
+-- subquery with exist (ex. Ex: Find out departments that have atleast one employee)
+
+select dept_name from departments d
+where exists (select 1 from employees e where e.dept_id = d.dept_id);
+
+-- Subquery in SELECT clause (show employee name with department name using subquery)
+select emp_name , (select dept_name from departments d where d.dept_id = e.dept_id) AS dept_name 
+FROM employees e;
 

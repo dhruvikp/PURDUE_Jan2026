@@ -2,6 +2,253 @@ Purdue_Daily_work2026
 https://github.com/dhruvikp/PURDUE_Jan2026
 
 
+--------------------------------------------------------------------------------------------------------------------------
+02/27/2026
+--------------------------------------------------------------------------------------------------------------------------
+
+Agenda:
+Stored Procedure
+	- Key Charasteristics of Stored Procedure
+	- When Stored Procedure are used?
+	- Benefits of Stored Procedure
+	- What are parameters in MySQL Stored Procedure
+	- Types of Parameters
+	- STored Procedure Syntax
+	- Stored Procedure Example
+	- IN, OUT, IN/OUT Parameter syntax
+	- Stored Procedures List View
+	- Stored Procedure Dropping
+	- Stored Procedure with No Parameters
+	- Builtin functions with stored procedure
+	- 
+
+
+Database Views:
+	- Key Characteristics/ Benefits of View
+	- View Example
+	- Alter view/ Drop View example
+	- What is MySQL View Processing Algorithm? (MERGE Algorithm, TEMP Table, Undefined)
+	- 
+
+What is SubQuery?
+Types of SubQUery
+How SubQuery WOrks?
+Use of subquery in stored procedure
+Use of subquery in views
+
+
+-------------
+
+Stored Procedure:
+================
+	What is SP?
+		- SP is precompiled collection of SQL statements, that can be stored in the database and executed as a single unit.
+
+	SP allows us to:
+		- Reuse SQL logic
+		- Improve Performance
+		- Encapsulate business logic inside the database.
+
+	Key Characteristics of SP
+
+		- SP stored inside database
+		- Can accept input parameters
+		- Can return output values
+		- Can contains multiple SQL Statements
+		- Reduce network traffic
+		- Improves security by restricting direct access to tables
+		- Can include control logic (IF, Loop, WHILE)
+
+
+Examples:
+	- Salary calculation
+	- Employee onboarding
+	- Order processing
+	- REport generation
+	- Data validation logic
+
+What are parameters in Stored Procedure?
+	Parameters are variables that allow data to be passed into or returned from stored procedure
+	They makes stored procedure dynamic and reusable.
+
+Types of parameters in MySQL
+	Three types of parameters
+		- IN parameter
+		- OUT parameter
+		- INOUT parameter
+
+IN Parameter:
+	- Used to pass values into the stored procedure
+	- Default parameter type
+	- Value cannot be cchanged outside the procedure
+
+
+OUT Parameter:
+	- Used to return a value from the stored procedure
+	- Acts like a return variable
+	- Value is set inside the procedure and read outside
+
+	Ex: Returning total employees
+		  Returning calculated salary
+
+INOUT parameter:
+	- Used to pass value in and return a modified value.
+	- Acts like both input and output
+
+ 
+Stored Procedure Syntax:
+---------------------
+
+	CREATE PROCEDURE procedure_name (
+		[IN | OUT | INOUT] param_name datatype,
+		..
+		..)
+
+	BEGIN
+		SQL Statements;
+	END
+
+	DELIMITER;
+
+
+
+Built-in functions in SP
+	
+	 - Performing calculations
+	 - Manipulating strings
+	 - WOrk with the dataes
+	 - Aggegate data
+
+	Common bult-in functions:
+
+	Aggregate 			COUNT, SUM, AVG, MAX, MIN
+  String  				CONCAT, UPPER, LOWER, LENGTH
+  Date 						NOW, CURDATE, YEAR, DATEDIFF
+  Numeric 				ROUND, CELL, FLOOR
+  Control					IF, CASE
+
+
+  ------------
+
+  Database views:
+
+  	A view in MySQL is a virtual table created using SELECT Query.
+
+  	 - A view doesn't store data physically
+  	 - It stores only the queyr definition
+  	 - Data is fetched dynamically from base tables
+
+  	View --> Saved SELECT query.
+
+
+  Benefits:
+  	- Data security
+  	- Simplifies complex queries
+  			Hides JOIN and filters
+  			Makes query easy for users.
+
+  	- Logical Data Abstraction
+  		- Underlying table structure can change
+  		- View remains same for users.
+
+  	- Resusability
+  		- Same view can be resused multiple queries
+  		- Avoids code duplicaitons
+
+  	- Consistent business logic
+  		- Business rules once
+  		- ENsures uniform data access
+
+
+View Processing Algorithms
+	Determines how MySQL executes view query internally?
+
+	It defines:
+		- Wheter MySQL merges the view query?
+		- Or creates a temporary table?
+		- Or decies automatically?
+
+	1. MERGE ALGORITHM
+			- View Query is merged into the main query
+			- No temporary table created
+			- faster execution
+
+
+	2. TEMPTABLE ALGORITHM
+
+		- MySQL creates temporary table
+		- Stores view result first
+		- Query runs on temporary data.
+
+	3. UNDEFINED Algorithm
+		- MySQL decies whether to use MERGE or TEMPTABLE
+
+
+
+------
+Sub Query
+	
+	SubQuery is a query written inside another sql query.
+
+		- Inner query --> Executed first
+		- Outer Query - Uses result of inner query.
+
+	Also known as nested query.
+
+	Why ?
+		- To break complex problems into smaller steps
+		- To avoid temporary tables
+		- To write readable and logical SQL
+		- To derive values dynamically
+		- To use query results inside another query
+
+	Types:
+		- Single-Row subquery
+		- Multi-Row subquery
+		- Correlated subquery
+		- Subquery with exists
+		- Subquery in SELECT/FROM/WHERE
+
+
+		Single-row
+			- Returns only one row
+			- can be used along with = , > , <
+
+		Multi-Row subquery
+			- Returns multiple rows
+			- Used with IN, ANY, ALL
+
+		Correlated subquery
+		
+			- Innerquery depends on outer query
+			- Executes once for each row
+			- Uses outer query column inside subquery
+
+		Ex: Find out employees earning more than average salary of their department?
+
+			For each employee, subquery calculates department average
+			- Comparision happens row by row
+			- More powerful but slower than normal subquery
+
+
+		Subquery with exists
+			- Checks whether subquery returns any rows
+			- Returns true or false
+			- Stops execution after first match
+
+
+			Ex: Find out departments that have atleast one employee
+
+		SubQuery in select clause
+
+			Ex. show employee name with department name using subquery
+
+
+
+
+
+
+
 
 --------------------------------------------------------------------------------------------------------------------------
 02/26/2026
