@@ -3,6 +3,298 @@ https://github.com/dhruvikp/PURDUE_Jan2026
 
 
 --------------------------------------------------------------------------------------------------------------------------
+03/03/2026
+--------------------------------------------------------------------------------------------------------------------------
+Agenda:
+	Triggers
+	Index
+	Backup and restore
+
+
+Triggers:
+---------
+	Trigger is a database object that automatically executed before or after a sepecific event occurs on a table.
+
+	Events:
+		- INSERT
+		- UPDATE
+		- DELETE
+
+	Triggers - automatically , not manually.
+
+ Key Characteristics:
+ 	- Automatically executed
+ 	- Associated with single table
+ 	- Fired on INSERT/UPDATE/DELETE
+ 	- Can BEFORE or AFTER an event
+ 	- Uses NEW and OLD Keywords
+ 		UPDATE - NEW  - valuse after change (OLD- value before change)
+ 		INSERT - OLD - Not allowed New available
+ 		DELETE - OLD available and NEW not available
+
+ 	- cannot accept parameters or return values
+ 	- Executes as part of transaction
+
+Syntax:
+	
+	CREATE TRIGGER trigger_name
+		BEFORE | AFTER INSERT | UPDATE | DELETE
+
+	ON table_name
+		FOR EACH ROW  --> Triggers runs for every affected row
+	BEGIN
+		SQL Statements;
+	END
+
+	DELIMITER;
+
+
+SIGNAL SQLSTATE - Manually raise an error or warning condition in storedprocedure/trigger . 
+45000 --> generic 'unhandled user-defined excetion'
+
+Practical applictions of Triggers:
+	1. Logging
+	2. Data validation
+	3. Audit trails
+		keep track of who changed what and when
+    4. Automatic data synchronization
+
+
+Two types of triggers:
+	1. Row - Level Trigger
+		Executes once for each row affected by the DML statement.
+		If statement affect N rows, trigger fire N times.
+
+	2. Statement - level trigger
+		Executes once per SQL statement, regardless of how many rows are affected
+
+		once per statement
+		DO not use FOR EACH ROW
+		CAN NOT ACCES TO OLD ADN NEW
+		Used for summay logging or bulk operations
+
+	oracle
+	postgresql
+	sql server
+
+	UPdate employees set salary = salary+10000, where dept=10;
+	insert bulk_log values ('',New())
+
+Can we modify Trigger in MySQL? 
+	NO
+
+DROP trigger trigger_name
+create trigger again with the same name
+
+Avoid triggers when:
+	- Business logic is complex
+	- Logic changes frequenty
+	- Performance is critical on bulk updates
+In that case:
+	better to handle thorugh stored procedure.
+
+
+Best practice:
+1. Keep triggers simple and lightweight
+2. Avoid recursive triggers
+	trigger should not modify same table it is attached to
+3. USE BEFORE Triggers for validation
+4. Use AFTER Triggers for Logging and Auditing
+5. Always log critical changes
+	- Salary change
+	- status udpates
+	- Deletions
+6. Give meaningful names to triggers
+
+-------------------
+	
+Index:
+	An Index in MySQL is a data structure that improves the speed of data retrieval (SELECT queries) on a table.
+
+	Ex:
+		Index of book --> jump to a topic
+		instead of reading every pages. (full table scan)
+
+
+
+	Seperate datastructure(BBT)
+
+		DHRUVIK --> internal referece
+
+	MySQL directly jump to matching rows
+
+Characteristics:
+	- Improves SELECT query performance
+	- Created on one or more columns
+	- Stored separately from table data
+	- Automatically updated when data changes
+	- Uses additonal disk space
+	- can slow down INSERT, UPDATE, DELETE
+	- MySQL uses indexes automatically for primary key
+
+Types of Index
+	1. Non-Unique Index
+		- Allows duplicate values
+		- Used for faster searching
+		- Most commonly used index type
+
+
+	2. Unique Index
+		- Ensures no duplicate values
+		- Allows only one NULL
+		- Enforces data integrity
+
+		Usecase:
+			- Email
+			- PAN,SSN
+
+		create unique index idx_emp_email
+		on employees(email);
+
+		-> prevents dupicate email entries
+		-> faster lookups and data validation
+
+	3. Primary Index 
+		- Automaticallly created when PRIMARY KEY is defined
+		- Values must be unique and NOT NULL
+		- only once per table
+
+
+	4. Composite index (Multi-column index)
+
+		- Index can be created on multiple columns
+		- Order of columns matters
+
+	Ex:
+		- Search by (dept_id + status)
+		- Filter by (Age + salary)
+
+		CREATE INDEX idx_dept_status
+		ON employees (dept_id, status);
+
+		Helps queris using
+			- dept_id
+			- dept_id + staus
+
+		Doesn't help queries using only status column
+
+
+	4. Full Text Index
+		
+		- Used for text searching
+		- Supports natural language search
+		- Works on CHAR, VARCHAR, TEXT
+
+	ex:
+		- Search employee profiels
+		- Product descriptions
+		- Blog content
+
+
+	CREATE FULLTEXT INDEX idx_emp_name
+	ON employees(emp_name);	
+
+
+	5. Spatial index
+
+		used for geographical data
+		works with spatial data types (POINT, GEOMETRY)
+
+		Ex:
+			Maps
+			Location based search
+
+	CREATE SPATIAL INDEX idx_location
+		ON locations(coordinates);
+
+
+
+- MySQL doesn't support rename index
+	DROP
+	CREATE
+
+Overidnexing - creating too many unnecessary indexes
+	- Slower DML operations
+	- Increased disk usage
+	- higher maintainance cost
+
+Note:
+	Used in where order by  join
+
+	use composite index wiesely
+		- place most selective columns first
+		- follow actual query patterns
+
+----------------------------
+Backup and restore
+	Backup - Copy of database that can be used to restore the database in case of:
+		- Data loss
+		- hardware failure
+		- Accidental DELETE/DROP
+		- Corruption
+		- Security attacks
+		- Migration or upgrade
+
+	Restore - Process of recovering data from backup and loading it back in MYSQL.
+
+
+Types of backup
+	1. Logical Backup
+
+		Storing data as SQL statements such as:
+			CREATE TABLE
+			INSERT INTO
+
+		saved in .sql file.
+
+		mysqldump
+
+		- Human readable
+		- Portable across versions
+		- slower for very large databases
+		- easy to restore
+
+
+	2. Physical backup	
+
+		Physical backup copies the acutal database files from disk.
+
+	Tools:
+		- MySQL enterprise backup
+		- File system copy 
+
+		.ibd or .frm files
+
+	- Faster for large datasets
+	- Not human readable
+	- versions and OS dependent
+	- More complex restore
+
+
+
+mysqldump- command line utility used to create logical backups in MySQL
+
+It exports:
+	- Database structure
+	- Data
+	- INdexes
+	- Constraints
+
+
+mysqldump -u root -p --all-databases > full_backup.sql
+mysqldump -u root -p --no-data company_db > company_schema.sql
+
+mysqldump -u root -p --no-data company_db | gzip  > company_schema.sql.gz
+
+
+create database company_db;
+mysql -u root -p company_db < full_backup.sql
+
+gunzip < company_schema.sql.gz | mysql -u root -p company_db
+zcat -> for linux
+
+
+--------------------------------------------------------------------------------------------------------------------------
 02/27/2026
 --------------------------------------------------------------------------------------------------------------------------
 
@@ -243,6 +535,7 @@ Sub Query
 
 			Ex. show employee name with department name using subquery
 
+08:09:24	select emp_name , (select dept_name form departments d where d.dept_id = e.dept_id) AS dept_name  FROM employees e	Error Code: 1064. You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'departments d where d.dept_id = e.dept_id) AS dept_name  FROM employees e' at line 1	0.00034 sec
 
 
 

@@ -384,3 +384,68 @@ where exists (select 1 from employees e where e.dept_id = d.dept_id);
 select emp_name , (select dept_name from departments d where d.dept_id = e.dept_id) AS dept_name 
 FROM employees e;
 
+-- ---------------------------------------------------------------------
+select * from employees;
+
+DELIMITER //
+CREATE TRIGGER before_employee_insert
+BEFORE INSERT ON employees
+FOR EACH ROW
+BEGIN
+	IF NEW.salary < 0 THEN
+		SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Salary cannot be negative';
+	END IF;
+END //
+DELIMITER ;
+
+	INSERT INTO employees (emp_id, emp_name, email, age, salary, dept_id, satus) values
+(6, 'Rahul', 'rahul@simplilearn.com', 28, -60000, 10, 'active');
+
+
+-- empoyee log
+
+CREATE TABLE employee_log (
+	log_id INT AUTO_INCREMENT PRIMARY KEY,
+    emp_id INT,
+    action VARCHAR(20),
+    action_time DATETIME
+);
+
+DELIMITER //
+CREATE TRIGGER after_employee_insert
+AFTER INSERT ON employees
+FOR EACH ROW
+BEGIN
+	INSERT INTO employee_log (emp_id, action, action_time)
+	VALUES (NEW.emp_id, 'INSERT', NOW());
+END //
+DELIMITER ;
+	INSERT INTO employees (emp_id, emp_name, email, age, salary, dept_id, satus) values
+(9, 'Dhruvik', 'dhruvik@simplilearn.com', 28, 60000, 10, 'active');
+
+select * from employee_log;
+
+
+-- EXERCISE: CERATE BEFORE UPDATE TRIGGER THAT PREVENT SALARY REDUCTION BELOW MINIMUM THRESHOLD
+-- NEW.SALARY < OLD.SALARY - 10000 --> SALARY REDUCTION TOO HIGH
+SHOW TRIGGERS;
+
+-- --------------------------------
+CREATE INDEX idx_emp_dept
+ON employees (dept_id);
+
+
+CREATE INDEX idx_dept_status
+		ON employees (dept_id, satus);
+CREATE FULLTEXT INDEX idx_emp_name
+	ON employees(emp_name);	
+
+SELECT * FROM employees
+	where match(emp_name) against('Rahul');
+
+show index from employees;
+
+explain select * from employees where dept_id = 10;
+
+
