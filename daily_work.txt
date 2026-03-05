@@ -3,6 +3,297 @@ https://github.com/dhruvikp/PURDUE_Jan2026
 
 
 --------------------------------------------------------------------------------------------------------------------------
+03/05/2026
+--------------------------------------------------------------------------------------------------------------------------
+
+Agenda:
+	- NoSQL?
+	- MongoDB fundamentals
+	- MongoDB Ecosystem
+	- Installation Steps
+	- MongoShell
+	- Practice insertion and view
+
+
+NoSQL?
+	It refers to a class of database system that do not follow traditional relational database model (table with rows and columns)
+
+	Unlike RDBMS such as MySQL, oracle, postgresql ,
+	NoSQL database are designed to handle:
+		- Large volume of data
+		- High speed data processing
+		- Flexible data structure
+		- horizontal scalling
+
+
+	NoSQL database store data in different formates as documents, key-value pair, graph, wide column structures instead of structured tables.
+
+Why NoSQL?
+	- Massive user data
+	- Realtime analytics
+	- Social media content
+	- IoT data streams
+	- Ecommerce transactions
+
+RDBMS - Struggle with scalling and flexibility
+
+Features of NoSQL
+	1. Schema flexibility
+		ID NAME EMAIL
+
+	   documents can have different fields.
+
+	 2. Horizontal Scalability
+
+	 	NoSQL databases supports horizontal scalling, meaning data is distributed across multiple servers (nodes)
+
+
+	 3. High Performance
+
+	 	- Fast reads
+	 	- Fast writes
+	 	- High throughput			
+
+	 4. Distributed Architecture
+
+	 	Data is shared across multiple machines
+
+	 	Benefits:
+	 		- Fault tolerance
+	 		- High availability
+	 		- Load balancing
+
+	 5. Big Data Support
+
+NoSQL Data Types:
+	
+	1. Key-Value Databases
+
+		Data is stored as key value pair
+
+			Key: user_101
+			value: {
+			name: "John",
+			age: 30
+			}
+
+		characteristics:
+			- very fast
+			- simple structure
+			- used for cachinga and session storage
+
+		Ex:
+			- Redis
+			- DynamoDB
+			- Riak
+
+	2. Document Databases
+
+		Data is stored as documents, usually in JSON like format.
+
+		Each document can contain multiple fields and nested structure.
+
+		- MongoDB
+		- CouchDB
+
+	3. Column - Family databases
+
+		Data is stored in columns instead of rows.
+		Columns are grouped into column families
+
+		This model is optimized for large - scale data processing
+
+		Ex:
+			- Cassandra
+			- HBase
+
+	4. Graph Databases
+
+	   Data is stored using nodes and relationships.
+
+	   This model is useful for applicatoins involving complex relationships
+
+	   Ex:
+	   	- Neo4j
+	   	- Amazon Neptune
+
+	   Used In:
+	   	- Social network
+	   	- Recommendataion engines
+	   	- Fraud detections
+
+
+MongoDB?
+	MongoDB is a NoSQL document oriented database designed for storing and managing large volume of data.
+
+	Instead of storing data in tables and rows, MongoDB stores as documents inside collections
+
+	Documents are stored in format called BSON (Binary JSON)
+
+Why MongoDB>?
+	- Schema flexibility
+	- High performane
+	- Horozonal scalability
+	- JSON-like Documents
+	- Rich QUery Capabilities
+		- Filter data
+		- Aggregate data
+		- Perform analytics
+
+MongoDB EcoSystem
+
+	1. MongoDB Core:
+		Main database engine, it handles
+			- data storage
+			- Query processing
+			- Indexing
+			- Replication
+			- Sharding
+
+		This is a central component of MongoDB Ecosystem
+
+	2. MongoDB Atlas
+		Cloud-based databae service provided by MongoDB
+
+		Features:
+			- Fully managed database
+			- Automatic backup
+			- Built-in Monitoring
+			- Auto scaling
+			- Global Deployment
+
+	3. MongoDB Realm
+		Mobile and application development platform
+
+		It offers developers to bild applications with
+			- Real-time data sync
+			- Authentication services
+			- Serverless function
+
+	4. Compass
+		MongoDB compass is GUI tool for MongoDB
+		Features:
+			- Visual data exploration
+			- Query building
+			- Performance analyssis
+			- Index management
+
+	5. MongoDB Connectors for BI
+
+		MongoDB Connectors for BI allows SQL based tools to access mongoDB data.
+
+		It converts MongoDB data into format compatible with business intelligence tools.
+		enables:
+			- Tableau
+			- PowerBI
+			- Excel
+
+	6. MongoDB Charts:
+		-Data visualizaiton tool
+		- Allows users to create charts and dashboards directly from MongoDB data.
+
+		This helps team analyze data visually without exporting it to other platoform.
+
+	7. MongoDB Aggregation Framework
+		Aggregation Framework allows developers to process and analyze data within MongoDB.
+
+		- Filtering
+		- Grouping
+		- Transforming
+		- Calculating results
+
+		analytics and reporting
+
+	8. Stich	
+		MongoDB Stitch - serverless platform for app development
+		- Authentication
+		- Database access
+		- serverless function
+
+		Nowadays Stitch is integrated into Realm
+
+
+Installation
+	
+	Minimum recommended:
+		- 4 GB
+		- 2GB free disk space
+		- 64 bit operating system
+
+
+	Install:
+		complete
+			MongoDB server
+			MongoDB Shell
+			MongoDB Tools		
+
+
+	MongoDB as a service
+		- Install as windows services
+		services --> MongoDB
+
+
+Concepts:
+	
+	Database in mongodb is a container that holds collections.
+
+	It is similar to a database with RDBMS
+
+	Each database contains multiple collections
+		ex: companyDB, Empoyeedb, flights, sales, inventorydb
+
+
+	MongoDB server --> conains multiple databases
+						each datbase contains collections
+
+					Each database independent of each other.
+
+	Collections?
+		- Group of mongodb documents
+
+		similar to table in relational database
+		Documents inside same collections can have different structures.
+
+
+	Documents?
+		- basic unit of data in mongodb
+		It is row in RDBMS
+		Document is stored as set of key-value pairs
+		Documents are represented using JSON-like format
+
+{
+	"name": "dhruvik",
+	"Address": {
+		"city": "bangalore",
+		"state":""
+		"country":""
+	}
+
+}
+	
+	- Documents stores data in key-value format
+	- Documents can contains nesetd objects
+	- Documents can contains arrays
+	- Documents are stored in BSON format internally
+
+	BSON:
+		BSON binary encoded format used internally by MongoDB to store documents.
+		MongoDB converts JSON documents into BSON before storing them in the database.
+
+	Why BSON?
+		- Faster data retrieval
+		- Additional data types
+		- Efficient storage
+		- Better performance
+
+
+
+MongoDB Server --> Databaase --> Collection --> Docuemnt --> Fields (key-value pairs)
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------
 03/03/2026
 --------------------------------------------------------------------------------------------------------------------------
 Agenda:
