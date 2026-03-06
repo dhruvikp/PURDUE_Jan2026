@@ -2,6 +2,218 @@ Purdue_Daily_work2026
 https://github.com/dhruvikp/PURDUE_Jan2026
 
 
+
+
+--------------------------------------------------------------------------------------------------------------------------
+03/07/2026
+--------------------------------------------------------------------------------------------------------------------------
+Agenda:
+	- MongoDB Schema validation
+	- Index
+	- Peformance tips
+	- Phase End project
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------
+03/06/2026
+--------------------------------------------------------------------------------------------------------------------------
+Agenda:
+	- CRUD
+	- find cursor concept
+	- Update operators
+	- Data modelling
+		OneToOne
+		OneToMany
+		ManyToMany
+	- MongoDB Aggregation framework
+	- Data Types
+
+CRUD
+	C - Create --> Insert data
+	R - Read 	-> Retrieve data
+	U - Update 	-> Modify Existing data
+	D - Delete 	-> Remove data
+
+
+Student management
+	studentId, Name, class, age, subjects	
+
+schoolDB
+	students
+		Document
+
+Cursor:
+	When query is executed using fine() method, MongoDB doesn't immediately return all matching documents. Instead it returns a cursor object, which allows the database to retrieve documents in batches.
+
+	20 by default.
+
+	- Fetch results in batches
+	- Loading documents only when needed
+	- Reducing memory consumption
+	- Improving query performance
+
+find() -> return cursor
+forEach --> loops thorugh each document
+doc --> variable represent each document
+
+hasNext()
+
+db.students.updateOne({}, {$rename: {"name":"fullname"}})	
+subject: ["math","science"]
+db.students.updateOne({}, {$push: {subject: "computer"}});
+
+subject: [.. , [computer]]
+
+
+$pull: Removes a value from an array
+db.students.updateOne({}, {$pull: {subjects:"Math"}})
+
+-----------
+	Data Modelling
+
+	Process of desiging how data will be structured, stored, and related inside a database.
+
+	- whether data should be embedded or referenced?
+
+ Why is it important?
+ 	- Improves query performance
+ 	- Reduce data duplication issues
+ 	- Making the application easier to maintain
+ 	- Ensures efficient data retrieval
+ 	- Deisining scalable applications
+
+ 1. One-to-One relationship
+ 		One docuemnt in a collection is related to exactly one document in another collection
+
+ 		Ex: User has passport
+
+
+ 2. One-to-Many relationship
+
+ 	Customer -> Orders
+
+
+{
+	_id: ObjectId("C101")
+	name: "Amit Patel",
+	email: "amit@email.com"
+	orders: ["ORD101", "ORD102","ORD103"]
+}
+
+Orders:
+{
+	orderId: "ORD101",
+	product: "Laptop",
+	price: 60000,
+	customerId: ObjectId("C101")
+}
+
+
+ 3. Many-to-Many relationship
+
+ Can be implemented
+  - Embedded documents
+  - Document references
+
+
+  Students --> Courses
+
+
+  Reference technique to store documents
+
+
+Courses:
+[
+	{
+		_id:101,
+		courseName: "Math",
+		duration: "3 months"
+	},
+	{
+		_id:102,
+		courseName: "Physics",
+		duration: "4 months"
+	},
+	{
+		_id:103,
+		courseName: "Computer science",
+		duration: "6 months"
+	}
+]
+
+
+students:
+[
+	{
+		name: "Rahul",
+		age: 20,
+		courses: [101,102]
+	},
+	{
+		name: "Priya",
+		age: 20,
+		courses: [102,103]
+	},
+	{
+		name: "Rahul",
+		age: 20,
+		courses: [101]
+	},
+
+]
+
+
+Aggregator operators
+	
+
+db.students.aggregate([
+	{
+		$lookup: {
+			from: "courses",
+			localField: "courses",
+			foreignField: "_id",
+			as: "courseDetails"
+		}
+	}
+	]
+)
+
+MongoDB Types:
+	
+	Text - "DHRUVIK"
+	Boolean - 
+	Number
+		Integer(int32). - 55
+		NumberLong(int64) -- 10000000000
+		NumberDecimal 		- 12.99
+
+	ObjectId
+	ISODate	- 2026-09-09
+	Timestamp - 
+	EmbeddedDocument
+	Array
+
+company
+
+	{
+		"name": "Fresh Apple Inc",
+		"isStartup": true,
+		"employees": 33,
+		"funding": 123456789012345,
+		"details": {"ceo":"Dhruvik Parikh"},
+		"tags": [
+			{"title":"super"},
+			{"title":"perfect"}
+		],
+		"fundingDate": new Date(),
+		"insertedDate": new Timestamp()
+	}
+
+
+MongoDB Schema Validation
+
 --------------------------------------------------------------------------------------------------------------------------
 03/05/2026
 --------------------------------------------------------------------------------------------------------------------------
@@ -289,7 +501,6 @@ Concepts:
 
 
 MongoDB Server --> Databaase --> Collection --> Docuemnt --> Fields (key-value pairs)
-
 
 
 
