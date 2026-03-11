@@ -2,6 +2,20 @@ Purdue_Daily_work2026
 https://github.com/dhruvikp/PURDUE_Jan2026
 
 
+--------------------------------------------------------------------------------------------------------------------------
+03/12/2026
+--------------------------------------------------------------------------------------------------------------------------
+
+Agenda
+- NodeJS fundamentals
+- Package manager 
+- Bulding blocks of Nodejs
+- Exploring Libuv
+- NodeServer
+- Understanding NodeJS ProcessObject and Events
+
+
+
 
 
 --------------------------------------------------------------------------------------------------------------------------
@@ -12,6 +26,262 @@ Agenda:
 	- Index
 	- Peformance tips
 	- Phase End project
+
+
+Schema validations:
+
+	Mongodb is schemaless database, which means documents udner same collection can have different structures.
+
+	{
+		name: "Dhruvik",
+		age: 25
+	}
+
+	{
+		username: "Priya",
+		email: "priya@gmail.com"
+	}
+
+Problems:
+	1. Inconsistent data structure
+	2. Incorrect data types
+	3. Missing required fields
+	4. applications errors
+
+To prevent these problems, MongoDB provides Schema validation.
+
+SV - Allows developers to define rules that documents must follow when inserted or updated.
+
+
+MongoDB uses JSON Schema to define validation rules.
+	- required fields
+	- data types
+	- field constraints
+	- value ranges
+	- allowed values
+
+db.createCollection("collectionName", {
+	validator: {
+		$jsonSchema: {
+			bsonType: "object",
+			required: ["field1","field2"],
+			properties: {
+				field1: {
+					bsonType: "string"
+				},
+				field2: {
+					bsonType:"int"
+				}
+			}
+		}
+	}
+
+})
+
+{
+	validator: {
+		$jsonSchema: {
+			bsonType: "object",
+			required: ["name","email","age"],
+
+			properties: {
+				name: {
+					bsonType: "string",
+					description: "Name must be a string"
+				},
+
+				email: {
+					bsonType: "string",
+					description: "Email must be a string"
+				},
+
+				age: {
+					bsonType: "int",
+					minimum: 18,
+					description: "Age must be an integer and >= 18"
+				},
+
+				isActive: {
+					bsonType: "bool",
+					description: "Must be true or false"
+				}
+			}
+
+
+		}
+	}
+}
+
+If you have existing collection, validation rules can be added using collMod.
+
+db.runCommand({
+	collMod: "employees",
+	validator: {
+		$jsonSchema: {
+		// Schema rules
+		}
+	}
+})
+
+
+Validation Modes:
+
+	validationLevel: Determines which documents are validated?
+
+		Two options
+
+		strict: All insert and udpates must follow schema
+		moderate: Only New documents are validated
+
+
+	validationAction: Defines what happens when validation fails.
+
+		error: Rject the operation
+		warn: Allow operation but log warning
+
+
+Two approaches:
+	1. Store media as binary data inside documents - 16 MB
+	2. Store large media using GridFS
+
+
+db.users.insertOne({
+	name:"rahul",
+	profileImage: BinData(0, "YYYSDOFSDJKLJDF") 
+})
+
+GrindFS - MongoDB specification for storing large files
+
+	- split file into small chunks
+	- stores chunks across multiple documents
+	- reconstruct the file when needed
+
+
+Frontend
+	static images
+	static videos
+
+	CDN --> 
+	
+Backend --> 
+---------------------------------------------
+Index in MongoDB
+
+Index - special data structure that improves the Speed of data retrieval operation
+
+Index stores value of a field in sorted strcture (B- Tree) along with references to the documentation that contains those value.
+
+Without Indexes, MongoDB performs Collection Scan (COLLSCAN)
+With Indexes, MongoDB performs Index Scan (IXSCAN)
+
+
+Why INdexes are important:
+ Improves performance for:
+ 	- searching documents
+ 	- Sorting results
+ 	- Aggregation operations
+ 	- Join operations ($lookup)
+
+ However, indexes also have trade-offs:
+ 	- Extra storage
+ 	- Slightly slower inserts and updates
+
+
+By default, mongodb creates index for _id field
+
+
+Types of Index:
+	1. Single Field Index
+
+		db.students.createIndex({city:1})
+
+
+	2. Compound index
+		Index on multiple fields.
+
+		db.students.createIndex({course:1, age:-1})
+
+	db.students.find({couse:'Computer science'}).sort({age:-1})
+
+	Rule:
+		Index order matters:
+		{course:1, age:1}
+
+		works for seach: 
+			course
+			course + age
+
+		Not for
+			age alone
+
+	3. Unique Index
+		Ensures field values remain unique
+
+		db.students.createIndex(
+			{email: 1},
+			{unique: true}
+	 	)
+
+	 	Duplicate insert will fail
+
+	 4. Text Index 
+	 	Used for Full Text search
+
+	 	db.articles.createIndex({content: 'text'})
+
+	 	db.articles.find({
+	 		$text: {$search: "mongodb"}
+	 	}) 
+
+	 5. TTL Index (Time-To_Live)
+	 	Automatically deletes documents after specific time
+
+	 	db.sessions.createIndex(
+	 		{createdAt: 1},
+	 		{expiredAfterSecionds: 3600}
+	 	)
+
+
+	 	Document expire after 1 hour, will be deleted from db
+
+
+MongoDB Best Practices:
+
+1. Design Right Data Model
+
+	a. Use Embed when data is accessed Together
+
+	b. Use References when Data is large or shared
+
+2.  Create proper index
+
+	Avoid too many indexes
+
+3. Use Projection
+	
+	db.users.find({age: 25}, {name:1, email:1} )
+
+4. Keep documents Small
+	Limit: 16MB size
+
+5. Use SChema Validation
+
+6. Monitor Query performance
+	use explain() --> analyze query performane
+
+7.Use proper hardware
+	SSD
+	Sufficient RAM
+
+8. Avoid large Joins
+	$lookup --> Frequent use can slow performance
+
+9. Use bulk operations	
+	insertMany([])
+
+10. Backup data regularly
+
+
 
 
 
