@@ -14,8 +14,340 @@ Agenda
 - NodeServer
 - Understanding NodeJS ProcessObject and Events
 
+What is NodeJS?
+	Open-source, cross-platform JavaScript runtime environment that allows javascript code to run outside the browser, mainly on the server side.
+
+	- crete web servers
+	- access files
+	- communicate with databases
+	- handle network requests
+	- Build backend system
+
+	Developers can now use JS for both frontend and backend development.
+
+	Characteristics:
+	-------------
+		- Runtime environment
+		- Built on chrome's V8 engine
+			V8 Engine converts javascript code to machine code, which allows programs to run very fast.
+		- Event-Driven Architecture	
+			Operations triggerred by events:
+				- File read completed
+				- HTTP Request received
+				- Db query read finished
+			System reacts to these events instead of waiting for operations to finish
+		- Non-Blocking I/O
+			Node.js performs non-blocking operations, meaning it doesn't stop execution while waiting for task 
+				- file-reading
+				- db queries
+				- network requests 
+		- Single threaded model
+			NodeJs uses main thread with an event loop to handle many concurrent requeests efficiently.
+
+	Benefits:
+	---------
+		- High performance
+		- Same language for backend and frontend
+		- High scalable
+			can handle thousand of concurrent connections due to its event driven architecture.
+		- Lage Ecosystem (NPM)
+		- Fast development
 
 
+Package Manager
+	built-in modules:
+		- fs
+		- http
+		- path
+		- os
+	Real-world applications requires many additonal features:
+		- web frameworks
+		- db connectivity
+		- authentication
+		- validation
+		- logging.....
+
+	Dev can use package already created by community. these packages extends NodeJs capabilities.
+
+	mongodb - Mongoose
+	webframeowk - express
+	authentication - passport
+	validations - joi
+	http client - axios
+
+	core package + extended packes == complete application
+
+	project -->
+	package.json
+
+	Package Manager: 
+		tool that helps developers to manage packages
+
+	Allows developers to:
+		- install packages
+		- update packages
+		- remove packages
+		- manage dependencies
+		- download packages from repositories
+
+
+	npm - Node.js default package manager
+	yarn - Alternative
+	pnpm - 
+
+	npm install express
+
+	componentes of npm:
+		1. npm CLI (Command line interface)
+		2. npm Registry 
+			public registry where all packages
+
+			folder: node_modules
+
+			npm install express
+			npm install -g package-name
+
+
+		npm init
+			creates file called package.json, which stores proejct information
+			ask questions:
+				- package name
+				- version
+				- description
+				- entry point
+				- author
+				- license
+
+		npm init -y
+
+		3. package.json
+
+			{
+				"name": ""
+				"version":
+				"description":
+				"main":"app.js"
+				"script": {
+					"start": "node app.js"
+				}
+
+				"dependencies": {
+					"express": "4.18.2"
+				}
+
+				"devDependencies": {
+
+				}
+			}
+
+
+devDependencies - used by developers
+	ex: 
+		- testing frameworks
+		- build tools
+		- debuggers
+
+check nodejs :
+	node -v
+	npm -v
+
+	npm init -y
+
+
+Building blocks of NodeJS
+	- Asynchronous Programming
+
+		synchronous:
+			read file --> wait
+			query db --> wait
+			send response
+
+			slow performane under heavy traffic
+
+		Start task1
+		start task2
+		start task3
+
+		process results when ready
+
+
+	- Non Blocking I/O 
+
+		System doesn't stop executing other operations while waiting for input/output operations to finish.
+
+		I/O operations:
+			- reading. files
+			- db queries
+			- network requetss
+			- API calls
+
+		Blocking I/O operations
+			Read file
+			(wait until file reading finishes)
+
+			then continue execution
+
+		Non-Blocking I/O operations
+			Read req received
+			continue process other request
+			when file reads completed --> process result
+
+	
+	libuv 
+		-
+
+Single thread + event loop 
+
+	event loop
+
+	heavy task
+
+		thread pool
+
+		background processing
+
+
+Flow:
+	Client request --> Event Queue --> Event loop --> call stack --> If heavy task
+																		- Thread pool
+																		- Callback queue
+													-> event loop
+													-> send response
+
+
+Benefits:
+	- Lower memory usage
+	- faster response time
+	- better scalability
+
+Single threaded event driven architecture
+
+LibUv
+	c-based library used by NodeJs to implement asyncrhonous , non-blocking I/O operation
+
+	Node js - mainly written in javascript + c++
+			many low level operations requires interaction with Operating system
+
+	Libuv provides that capability:
+
+
+	Application code (java script)
+
+		Node JS APIs
+
+			V8 javascript engine
+
+				Libuv
+
+					operating system
+
+
+
+		HTTP Protocol:
+		 drao io
+
+
+	Node Server:
+		Program that listen for client request over network and send responses back to the client
+
+	 	client can be  
+	 		- web browser
+	 		- mobile application
+	 		- other backend service
+	 		- APIs
+
+	 	Communication happens through HTTP protocol
+
+	 	client --> HttpReqeust --> NodeJs sever --> process request --> send response back
+
+	 HTTP Module
+	 	core module of nodejs
+
+	 	Allows applications to:
+	 		- handle client requests
+	 		- send responses
+	 		- build APIs
+	 		- build webservers
+
+	 	HttpStatus code:
+	 		200 -> Success
+	 		201 -> Resource created
+	 		400 -> Bad request
+	 		404 -> Not found
+	 		403 -> forbidden
+
+	 		500 -> server error
+
+Process Object
+	global boject that provides information and control over current Node js application
+
+	It represents running NodeJs process
+
+	console.log(process)
+
+	What this process object provides?
+		- environment variables
+		- command line arguments
+		- application exit control
+		- memory usage
+		- runtime information
+		- process events
+
+	Events
+		even driven architecture
+
+		Ex:
+			- HTTP request received
+			- file read copleted
+			- database query finished
+			- timer executed
+		NodeJs provides EventEmitter class to manage events
+
+
+	Event Occurs
+	Event detected
+	Event handler executes
+
+	Process Events:
+	 process object emits various events during lifecycle of nodejs application.
+
+	 These events help develoepr to manage:
+	 	- application shutdown
+	 	- errors
+	 	- promise handling
+	 	- inter process communication
+
+
+	 beforeExit event
+	 	Triggered when Node.js has finished executing the event loop and is about to exit.
+
+	 	This allows developers to schedule additional work before the process exits.
+
+	 disconnect event
+	 	Triggered when Nodejs process loses connection with its parent process.
+
+	 	This occurs mainly in child process communication.
+
+	 exit
+	 	Triggred when Node.js process is about to exit
+	 	No asyncrhonous operations can be executed here.
+
+
+	 	uncaughtException Event
+	 		Triggered when exeception occurs and is not handled by try-catch block.
+
+
+	 	unhandledRejection Event
+	 		Triggered when a Promise rejection is not handled
+	 		Promise.reject()
+
+	 	warning event
+	 		Triggered when Node.js emits a runtime warning
+
+	 	rejectionHandled event
+	 		Triggered when previously unhandled promise rejection gets handled later.
+
+	 			
 
 
 --------------------------------------------------------------------------------------------------------------------------
