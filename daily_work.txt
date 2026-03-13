@@ -3,6 +3,361 @@ https://github.com/dhruvikp/PURDUE_Jan2026
 
 
 --------------------------------------------------------------------------------------------------------------------------
+03/13/2026
+--------------------------------------------------------------------------------------------------------------------------
+Agenda:
+	- Handling Request and Response + Routing
+	- Callstack and callback fundamentals
+	- Streams and Stream utility functions
+	- Buffers and character sets understanding
+	- JavaScript Refresh concepts
+		IIFE
+		Object create
+		Prototype object
+		Reusing methods across objects using apply and call methods
+
+
+
+- Handling Request and Response + Routing
+	
+	Network communication doesn't send all data at once. 
+	Instead, the request body is received in small pieces called chunks
+
+	clinet --> Node receives chunks --> chunks are combined --> final body processed
+
+	res --> Writable Stream object
+
+	writes data to the response stream.
+
+	res.write() --> Sends chunks of data
+
+
+	res.end() --> Finish response
+
+	res.writeHead --> send header information
+
+	GET /home --> Show homepage
+	GET /about --> Show about page
+	GET /login --> show login page for user to authenticate
+
+Call stack: 
+	The callstack is datastructure that keeps track of function execution in Nodejs program
+	It follows LIFO principle
+	Last function added --> executed first
+	The call stack stores function execution context.
+
+Callback Queue:
+	When Asynchronous operation is completed, their callbackes are placed into queue called the callback queue.
+
+	Types:
+		TimerQueue	- Stores callback scheduled by timer functions
+					setTimeout()
+					setInterval()
+
+
+
+		Microtask queue
+			higher priority than other queues
+
+			Promise.then()
+			process.nextTick()
+
+
+
+		I/O Queue
+			Handles callbacks related to I/O operations
+
+		Examples:
+			File reading
+			network requests
+			database operations
+
+		File read --> Completed --> callbakc added to I/O queue
+
+		Check Queue
+			Handles callbacks scheduled by:
+				setImmediate()
+
+			This callback runs after I/O phase.
+		
+
+		Close Queue
+			Handles callback related to closing resources
+
+		Ex:
+			Socket closing
+			Stream closing
+
+			socket.on('close')
+
+
+Priority:
+	Microtask queue --> Timer Queue --> I/O QUeue --> Check Queue --> Close Queue
+
+
+Nodejs Streams:
+	Stream is an object that used to read or write data continiously in small chunks instead of loading everything into memory.
+
+Streams allow efficient data processing
+	Ex:
+		files
+		HTTP Reqeust
+		network websockets
+		compressed data
+
+
+		Source --> Stream (data chunks) --> Destination
+
+
+
+	Types:
+		Readable. -- Used to read data
+		Writable. -- Used to write data
+		Duplex.   -- Read and write both
+					reading and writing simultaniously.
+
+			Ex: TCP Sockets
+				Network communications
+
+				Both sides can send or receive data
+
+				const net = require("net");
+
+			const server = net.createServer((socket)=> {
+			socket.write("Hello client");
+			socket.on("data", (data)=> {
+				console.log("client says:", data.toString());
+
+			})
+		
+
+			server.listen(3000);
+
+
+
+		Transform. -- Modify data while streaming
+
+		Ex:
+			Compression
+			Encryption
+			data formating
+
+Stream utility functions:
+	pipeline() --> safely connects streams toghether and handles errors automatically
+
+	Readable.from()
+		Creates readable stream from iterables or arrays
+
+
+	finished() --> detects when a stream has completed.
+
+	addAbortSignal() --> Allows cancellation of streams using AbortController.
+
+
+---------------------
+Understand Buffers 
+	
+	JavaScript oriignally works well with text- data, but many real-world applications require handling binary data.
+	such as:
+		- images
+		- video
+		- audio
+		- netowork packets
+		- compressed files
+
+	Binary data cannot be processed directly as strings.
+
+	Node.js introduced Buffers to handle raw binary data efficiently.
+
+
+What is buffer?
+	Buffer is a fixed chunk of memory allocated outside V8 engine used to handle binary data in Node.js
+
+Key points:
+	- Stores binary data
+	- Used heavily in streams and networking
+	- Represents data as bytes.
+
+
+	A --> 01000001
+	  --> 41 (Hexadecimal representation)
+	  --> 65 (Decimal representation)
+
+
+Character sets
+	defines the mapping between characters and numeric codes.
+
+	characters --> Number
+
+ASCII character set
+	American Standard code for Information Interchange
+
+	7 bit (128 characters).
+
+	A --> 65
+	B
+	C
+	s	  
+
+	Includes:
+		- English letters
+		- numbers
+		- puctuation
+
+	But it cannot handle:
+		- chinese characters
+		- emojis
+		- many other international launguages
+
+Unicode character sets
+	Created to represents all characters from all languages
+
+	1000000 + characters supports
+
+
+Character Encoding
+	Character encoding defines how characters are stored as bytes in memory.
+
+	Character --> Unicode point --> encoding --> Binary bytes
+
+	UTF-8 Encoding
+		UTF-8 is the most common encoding used on the internet
+
+		Features:
+			- Variable length encoding
+			- uses 1-4 bytes per character
+			- backward compatible with ASCII
+
+setEncoding() --> with streams to convert buffer data into readable strings automatically.
+
+	normally streams uses buffer objects
+	setEncoding() - convert tham into strings.
+
+
+	utf8 - default encoding styles
+	ascii - ASCII encoding
+	base64 -  binary-text encoding
+	hex - Hexadecimal encoding
+	latin1 - ISO-8859-1 encoding
+	ucs2/utf16le - Unicode 16-bit encoding
+
+
+
+	Arrow function?
+		Storing function as variable
+		passing function as argument
+
+	Function constructor
+
+	IIE
+	prototypes
+
+Javascript few concepts:
+	
+	const add = function(a, b) {
+			return a+b;
+	}
+
+	add(3,4) --> 7 
+
+	const add = (a, b) => {
+		return a+b;
+	}
+
+	const add = (a,b) => a+b; // Function expression
+
+	arrow function with this keyword
+	Arrow funciton doesn't own this keyword
+	it will inherit from the surrounding scope.
+
+
+	Function Constructor:
+
+		const user1 = {
+			name: "john",
+			age: 25
+		};
+
+		const user2 = {
+			name: "john",
+			age: 25
+		};
+
+
+		function FunctionName(parameters) {
+			this.property = value
+		}
+		FunctionName -- start as capital letter
+		- used with new keyword
+
+		javascript internals:
+			- creates empty new object {}
+			- Sets this --> new object
+			- Executes constructor function
+			- Returns object
+
+
+Class?
+	Modern javascript often uses class syntax, but internally it behaves like constructor functions.
+ 
+pass by value -- copy of the variable value is passed to the function
+pass by reference -- copy of the reference location of the object
+
+IIFE - Immediately Invoked Function Expression
+	
+	function that executes immediately after it is defined
+
+	Normally, functions must be called separately
+
+Why?
+	1. Avoid global variable population
+	var count = 0;
+		this creates global variable
+
+	Using IIFE
+
+	2. Module Pattern
+
+Arrays
+	idex - 0
+	- store differen data types
+	let data = [10, "node", true]
+
+	data[0] = 11;
+	push
+	pop
+
+
+	prototype chainign -> dog --> animal(prototype) --> Object.prototype
+
+
+	Prototype:	
+		Every object has an internal link to another object called its prototype.
+
+	This prototype acts like a parent object, from which properties and methods can be inherited.
+
+	Reuse methods across objects
+		call()
+		apply()
+
+		bind()
+
+	call() --> invokes a function and allows us to set value of this.
+		function.call(thisArg, arg1, arg2, arg3....)
+
+	apply() --> works like call but accepts arguments as an array
+	funciton.apply(thisArg, [args])
+
+	bind() --> returns a new function and doesn't execute immediately
+			
+
+
+
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------
 03/12/2026
 --------------------------------------------------------------------------------------------------------------------------
 
