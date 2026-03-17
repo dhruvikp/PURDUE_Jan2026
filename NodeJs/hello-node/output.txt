@@ -1,2 +1,5 @@
-Hello, this is a writable stream example.
-This data will be written to output.txt.
+Hello, this is a test.
+This line is appended.
+This line is appended.
+This line is appended.
+This line is appended.

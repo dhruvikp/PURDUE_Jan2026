@@ -2,6 +2,193 @@ Purdue_Daily_work2026
 https://github.com/dhruvikp/PURDUE_Jan2026
 
 
+CREATING E2E program at the end (contains nodejs, express, cypress everything)
+	communicate with DB (mysql)
+
+
+Agenda:
+	- NodeJS Modules
+	- NodeJS fs module
+	- Event management with Nodejs
+		- create custom events in nodejs
+
+
+Module?
+	A Module in Nodejs is reusable block of code that can be exported from one file and imported into another file.
+
+Every file, is treated as separate module.
+Module helps in:
+	- Organized code
+	- Improves maintainability
+	- Code reuse
+	- separating functionality
+
+
+app.js -  
+math.js
+user.js
+product.js
+
+	- Each module you specify its responsibility.
+
+
+Types of Nodejs modules:
+	1. Core Modules 		- Built-in modules provided by Nodejs (fs, http, path, os, events, stream)
+	2. Local Modules 		- Modules created by developers
+	3. Third-party Modules	- Modules installed using npm (express, mongoose, lodash, axios)
+
+How Nodejs module system works?
+
+When Nodejs loads module:
+	1. Module code is wrapped inside a function
+	2. Variables are scopped locally
+	3. Only exported content is accessible
+
+Important Module Variables:
+ exports - shortcut for module.exports
+ module - current module object
+ require() - import modules
+ __filename - current file path
+ __dirname - current directory
+
+
+ Two ways module can be exported:
+ 	1. module.exports
+ 		used to export functionality from a module
+
+ 	2. exports
+ 		shortcut reference to module.exports
+
+
+ Module loading process in Nodejs
+ 	when require() is executed:
+ 		Nodejs performs:
+ 			1. check core modules
+ 			2. check local files
+ 			3. check node_modules directory	 
+
+
+require("fs")
+require("./math")
+require("express")
+
+app.js
+server.js
+database.js
+	connectDB
+	closeConnectionDB
+
+
+
+Export Literals:
+
+	
+	Module can export literal values such as:
+		- numbers
+		- strings
+		- booleans
+
+config.js
+
+	module.exports = 3000;
+
+const port = require("./config")
+
+message.js
+module.exports = "Welcome to Nodejs"
+
+const message = require("./message")
+
+Exporting objects
+ Export object containing multiple functions or values.
+ This allows module to expose multiple functionalities.
+
+
+Exporting function as a class
+	sometimes we export constructor functions, which behave like class.
+
+Export a function that returns an object
+
+
+
+
+-------------
+fs module
+synchronous vs asynchronous methods
+key operations (read, write, append)
+read directories
+creating directories
+check if file or directory exists or not.
+
+
+
+Synchronous. 	-  Blocks executions until operation complete (not recommended)
+Asynchronous.   - Non blocking, uses callbacks
+
+
+Reading Directory:
+	Nodejs can read all files inside a folder
+
+	fs.readdir()
+
+Cehcking if directory or file exists
+	Two ways:
+		1. fs.existsSync()
+		2. fs.stat()
+
+
+
+-----------
+	Event management
+
+	Event - an action or occurrance detected by system that can trigger a response.
+
+Ex:
+	- file opened
+	- request received
+	- timer completed
+	- user logged in etc
+
+
+Nodejs provides core module named, events for working with events.
+	- Create events
+	- emit events
+	- listen for events
+	- handle event-driven logic
+
+EventEmitter
+	this EventEmitter class is the core class used to manage events in Node.js
+
+	it allows to:
+		- emit events
+		- listen for events
+
+emitter.on - listen for events
+emitter.emit - used to trigger an event
+
+emitter.once() - sometimes event should execute only once.
+
+emitter.off() - remove listeners
+emitter.removeListener()
+
+
+Two ways to work with EventEmitter.
+
+1. Returning an EventEmitter from a function
+
+	A function can create and return EventEmitter object, allowing external code to listen for events
+
+2. Inheriting the EventEmitter class
+	Instead of creating emitter manually, we can extend the EventEmitter class.
+
+	this allows objects to emit event directly
+
+
+Order is placed --> payment process --> update inventary --> email to the customer
+
+
+
+
 --------------------------------------------------------------------------------------------------------------------------
 03/13/2026
 --------------------------------------------------------------------------------------------------------------------------
