@@ -6,6 +6,409 @@ CREATING E2E program at the end (contains nodejs, express, cypress everything)
 	communicate with DB (mysql)
 
 
+--------------------------------------------------------------------------------------------------------------------------
+03/18/2026
+--------------------------------------------------------------------------------------------------------------------------
+Agenda:
+	Error Handling
+	Network fundamentals
+	Dynamic application with template engine undersanding
+	API Endpoints
+	Deploying application (Heroku and vercel)
+	How to debug application using VS Code?
+	Multiprocessing
+	Nodejs cluster
+
+
+Error Handling
+	Error handling is process of detecting, managing and responding to errors in an application without crashing them.
+
+	Types of errror:
+	
+	Syntax Error 	- wrong code
+	Runtime Error 	- file not found
+	Logical Error 	- Wrong calculation
+
+
+Without Error handling 	
+	- Application crashes
+	- Poor user experience
+	- May create Data inconsistency
+
+With Error handling
+	- Graceful failure
+	- Stable system.
+
+Techniques:
+Synchronous way
+	1. try...catch
+
+Asynchonous way
+	2. Callbacks
+
+		callback(error, result)
+
+		Callback chains problem
+			When multiple async operations depend on each other --> nested callbacks
+
+			Deep nesting
+			hard to read
+			hard to debug
+			hard to maintain
+
+		Problem: known as Callback Hell problem
+
+		Strategy to handle error:
+			1. Early return pattern
+				if(err) return early
+
+			2. Modular functions
+				function readFile1(cb) {..}
+				function readFile2(cb) {..}
+
+
+			3. Using async library (best for callbacks)
+
+				async.parallel(tasks, callback)
+
+			Execution - Parallel
+			Performance - Fast
+			Result order - maintained
+			Error handling - Stops on first error
+
+
+			async.series(tasks, callbacks)
+
+				Execution - Sequence
+				Dependency support - Yes
+				Slower than parallel
+				Error handling - Stops on error
+
+			Usecase
+				Fetch:
+					- userdata
+					- orders
+					- Notifications
+
+
+				Create order:
+					step 1: Validating user
+					step 2: Processing payment
+					step 3: Create order
+
+
+
+	3. Promises
+
+		new Promise( (resolve, reject) => {
+			// success -> resolve
+			// error -> reject
+		});
+
+
+
+	4. EventEmitter
+
+
+Network Fundamentals
+
+	client  server
+
+	Browser 		server
+
+	Basic flow:
+		client (browser) --> Internet protocols (HTTP) --> Server(Node js) --> Response back
+
+	Internet protocols?
+		A protocol is a set of rules that defines how data is trasmitted over a network.
+
+		Common Protocols:
+			HTTP/HTTPS 	-- Web communication
+			TCP 		-- Reliable Data Transfer
+			IP 			-- Addressing system
+			UDP 		-- Fast but unreliable transfer
+			DNS 		-- Domain -> IP Conversion
+
+	TCP/IP
+		Fundamental communication protocol suite used on the internet
+
+		Two parts:
+			1. IP
+				Responsible for addressing
+				Ensures data reach the currest destination
+
+			2. TCP
+				- Responsible for reliable data transfer
+				Ensures
+					- No data loss
+					- Correct order
+					- Error handling
+
+			Example,
+				you open google.com
+
+					DNS resolves IP
+
+					TCP Connection establishment
+
+					HTTP Request sent
+
+					Response received
+
+		Layers
+			Application Layer
+				HTTP, HTTPS, FTP, DNS
+
+			Transport Layer
+				TCP(Reliability)
+				UDP (fast)
+
+			Internet/Network layer
+				Uses IP protocol
+				REsponsible
+					- routing
+					IP addressing
+
+			Physical layer
+				Handles data transmission physical channel
+
+				Ethernet
+				WiFi
+
+80 - HTTP
+443 - HTTPS
+21  - FTP
+22  - SSH
+3000 - NodeJS apps
+
+0 - 65535
+
+0-1023 - Well-knwn ports
+
+1024 - 49151 - Used by applications
+	3306 - MySQL
+	5432 - PostGreSQL
+
+49152 - 65535
+	Used temporarily by clients
+
+
+
+
+ReactJs		--> Backend API
+				Return JSON data as response
+
+
+	Contract
+		/datashbaord
+
+		{
+			users: {
+				name:
+				address:
+				emaeil:
+			},
+			profile {
+
+			},
+			..
+			..
+		}
+
+
+
+
+Dynamic application
+
+	APIs
+		/users/ GET
+
+		/profile/ GET
+
+		/users/ POST
+
+		/users/1 PUT
+			Updte user with id 1
+
+		/users/1 DELETE
+			Delete user with id 1
+
+		/dashboard/
+
+			Correct data to populate your html
+
+			Data +Template Engine
+				populating data whenener there is a placeholder
+
+				Generate HTML output
+
+
+			--> Request --> <h1> Welcome john </h1>
+
+						--> <h1> Welcome <%= name %> </h1>
+
+						Data:
+							{
+								name: "John"
+							}
+
+		Advantage of Template Engine:
+		 1. Dynamic contnet rendering
+		 2. Code reusability
+		 3. Separation of concern
+		 	Backend code -> logic to fetch userdata 
+		 	Template -> Data --> to generate dynamic html 
+
+		 4.  Maintainability	
+		 	Change in UI one place --> reflects everywhere
+
+		 5. Faster development
+
+	Template Engines
+		EJS (Embedded JavaScript)
+			HTML + JavaScript inside <% %>
+
+			Simple
+			Similar to HTML
+			Easy to learn
+
+
+		Pug (Formaly Jade)
+			Indentation based synatax (no HTML tags)
+
+
+			h1 Welcome #{name}
+
+			Cleaner synatx
+			less code
+			faster writing
+
+		Mustache
+			Logic less template engine
+
+			{{name}}
+
+			Featues:
+				- No JS Logic
+				- Safe and simple
+
+		Handlebars
+			Advance verson of Mustache
+
+			Supports helpers
+			more powerful than Mustache
+
+
+		Nunjucks
+			Inspired by Python's Jinja2 templates
+
+			Rich features
+			Tempalte inheritance
+			loops , conditions
+
+		Vash
+			Razor like Synatax (.NET)
+
+			<h1>@model.name</h1>
+
+		doT.js (Dut.js)
+			High performance template Engine
+
+			{{=it.name}}
+
+
+			Very fast
+			Lightweight
+
+
+		atpl
+			Lightweight async tempalte engine
+
+		Haml
+			similar to pug (identation based)
+
+
+React app
+	contract
+
+Backend app (nodejs) expressjs/ nodejs http module node server expose API based on contract
+
+Deplying application
+	Heroku
+		A platform as a service (PaaS) that allows you to deploy applications easily
+
+
+		Feature of Heroku:
+			- Easy deplyment via Git
+			- Free timer (limited)
+			- Auto scaling
+			- Add-onds (DB , Logging etc)
+			- CI/CD support
+
+		Steps:
+			npm install -g heroku
+
+			heroku login
+
+			heroku create
+
+			Create Nodejs application
+				Platform.js
+					"scripts": {
+						"start": "node app.js"
+					}
+
+			git init
+			git push heroku master	
+
+			open application
+			heroku open
+
+			app.js
+				app.listen(PORT)
+
+
+	Vercel
+		A Serverless deployment platform maintly for frontend and APIs
+
+
+	Features:
+		- Serverless functions
+		- Fast global CDN
+		- Zero config deployment
+		- Git integration
+		- Auto scaling
+
+
+		npm install -g vercel
+
+		vercel
+
+			project name
+			framework
+			deploy
+
+
+Client 
+	
+	HTTP Request
+
+	Express API Endpoint
+
+	Business logic
+
+	Response (JSON)
+
+	Deployed on Heroku/vercel
+		access it globally
+
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------
+03/17/2026
+--------------------------------------------------------------------------------------------------------------------------
 Agenda:
 	- NodeJS Modules
 	- NodeJS fs module
