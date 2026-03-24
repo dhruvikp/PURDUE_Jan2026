@@ -7,6 +7,346 @@ CREATING E2E program at the end (contains nodejs, express, cypress everything)
 
 
 --------------------------------------------------------------------------------------------------------------------------
+03/26/2026
+--------------------------------------------------------------------------------------------------------------------------
+
+
+E2E application- CRUD
+
+--------------------------------------------------------------------------------------------------------------------------
+03/24/2026
+--------------------------------------------------------------------------------------------------------------------------
+
+What is Express.js?
+ExpressJS architecture
+
+MVC Architecture understanding
+Hello world application of MVC
+Template Engine - Two views - Pug, EJS
+Example of using views
+Request handling and response Handling 
+Error handling
+
+-----
+What is ExpressJS?
+	Flexible web application framework for Node.js used to build API and web servers.
+
+	Leight weight 
+	Unopinionated ( you design architecture)
+
+Key Features of Express js
+	- No forced structure 
+	- You decide:
+		- Folder structure
+		- Design pataterns
+		- Library
+
+	Midleware - Based architecture
+
+	Everything is Middleware:
+		- Logging
+		- Authentications
+		- Validations
+		- business logic
+
+	Routing System
+		app.get('/users', handler)
+
+		Supports:
+			- Route parameters /users/:id
+			- Query params /users?userId =3
+
+	HTTP Utility Methods
+		Simplifies reqeust/response handling
+		req.params, req.body, req.query....
+
+	Extensibility	
+		MongoDB - 
+	 	Huge ecosystems - morgan, jsonwebtoken, cors, body-parser
+
+	 High perforance
+	 	Built on Node.js
+	 	Uses Event loop -> handles thousands of concurrent requests.
+
+
+MVC Architecture
+----------------
+
+	users/ GET
+	/users/ POST
+	/users/1 PUT
+
+
+Goal:
+	/hello
+
+	- Hello Dhruvik!
+
+/api --> helloRoutes
+
+/api/hello --> 
+
+
+app.js - configuration information (middleware, routes)
+server.js - startup (port, server)
+
+MVC
+Controller - all business logic (using routes to handle request)
+View - write your frontend logic (res.send())
+Router - all routes inforamation
+
+
+client request --> Routers --> parse json body --> call controller handler --> populate model --> return response
+
+
+Request Handler
+	A function  that receives request and send response.
+
+	(req, res, next) => {
+	}
+
+
+	api.get('/hello', (req, res) => {
+		res.send("hello world");
+	});
+
+client -> Express -> Request Handler
+
+
+req - represents incoming request (which is sent from the client)
+res - Response object what inforation you want to send back to the client
+next --> pass control to the next middleware
+
+business logic
+	user request /dashboard
+
+		Auth Middleware			Dahboard Middleware
+
+		check credentials			dashbaord logic
+
+
+
+
+Accessing Request Data:
+
+	req.params 			-- 			URL parameters
+
+		/user/5
+
+	Inline handler
+		app.get('/user/:id', (req, res)=> {
+			req.params.id --> how you get id from the url pattern
+		});
+
+
+
+	req.query - Fetch query parameters
+		/user?userName=Dhruvik&userDesignation=IT
+		req.query.userName
+		req.query.userDesignation
+
+	req.body (Request body)
+		app.use(express.json)
+		app.use(express.urlencoded({extended: true}))
+
+	req.files --> Used to access uploaded files
+		multer (most common)
+
+
+	 	app.post('/upload', (req, res) => {
+	 		req.files
+	 		res.send("File received")
+	 	})
+
+
+	 req.route --> Gives you information about matched route
+
+	 req.route.path --> /users/:id
+	 req.route.method --> {get : true}
+
+	 req.route.keys --> Route parameters metadata
+	 	[{name: 'id', optional: false}]
+
+	 req.route.regex -> Internal regex used to match the route
+
+	 req.route.params --> req.params
+
+	 req.cookies
+	 	cookie-parser
+	 	app.use(require('cookie-parser'))
+
+	 req.get --> used to read reqeust header
+	 	req.get('User-Agent')
+
+
+	 Advanced request properteis 
+	 req.stale --> Indicates whether the request is stale (cache is outdated)
+	 req.secure --> Checks if request is HTTPS
+
+	 	app.get('/secure', (req, res) => {
+
+	 		if(req.secure) {
+
+	 		} else {
+	 		res.send("not secure");
+	 		}
+
+	 	})
+
+	 req.subdomains --> Returns subdomains as an array
+	 req.xhr --> checks if request is made via AJAX?
+
+	 req.baseurl --> Returns base path of router
+	 req.ip --> client ip address
+	 req.ips --> List ips (beind proxy)
+
+
+Response Handler
+	send() --> Sends any type of response
+
+		What can be send?
+			String
+			HTML
+			Object
+
+
+		res.send({name: "Dhruvik"});	 
+
+
+		Automatically converted to JSON
+
+	res.json() 
+		Sends only JSON response
+
+		app.get("/json", (req, res) => {
+			res.json({message: "Hello JSON"})
+		});
+
+	res.status()
+
+	res.status(200).send("OK")
+
+		2xx
+		4xx - Bad request/auth/not found
+		5xx - Server error
+
+		ex: res.status(404).json({error: "Not Found"});
+
+
+	res.redirect()
+		Redirects client to another URL
+
+			app.get('/old', (req, res)=> {}) {
+				res.redirect(301, '/new')
+			}
+
+	res.render()
+		Renders the template (EJS/PUG)
+		
+			res.render('index', {name: 'Dhruvik'});
+
+
+
+
+How to handle view files/Template engine
+
+	1. Handling Static files in Express.js
+
+		Files served directly to browser:
+			- css
+			- JS
+			- images
+
+
+		Request -> check /public -> if file exist --> returns file
+		No controller needed
+
+	2. Handing dynamic response thorugh Template Engine(Pug, EJS)
+
+
+		pug
+
+	Nodemon - Tool that auto-restarts server when file change
+
+
+Error handling
+	
+
+Handling Syncrhonous Errors
+-----------------------	
+	Error Handling - Capturing failures and sending proper response
+
+	In Express, Error handling are handled via:
+		Error-handling middleware
+
+
+	Synatx: 
+		(err, req, res, next) => {
+
+		}
+
+	4 parameters ==> Tells express that this is error middleware
+
+	Ex.
+
+	app.use((err, req, res, next) => {
+		res.status(500).send(err.message)
+	})
+
+
+Express automatically catch sync erros
+	Throw error --> Express catches --> send to error middlewrae
+
+
+------------------
+Handling Asynchronous errors
+
+	Errors inside
+		- async/await
+		- Promises
+		- callbacks
+
+
+app.get('/async', async (req, res) => {
+	throw new Error("Async error");
+})
+
+NOT Caught errors automatically.
+
+
+Correct way (Manually next)
+	
+
+	app.get('/async', async (req, res, next) => {
+		try {
+			throw new Error("Async Error")
+		} catch(err) {
+			next(err)
+		}
+	})
+
+
+Better approach (Wrapper)
+
+const asyncHandler = fn => (req, res, next) => 
+	Promise.resolve(fn(req, res, next)).catch(next)
+
+
+app.get('/async', 
+	
+	asyncHandler( async (req, res) => {
+		throw new Error("Async Error")
+	} )
+
+)
+
+
+
+req -> middleware1 -> middleware2 -> route -> response
+req -> middleware1 -> ERROR --> skip normal middlware -> error middleware
+
+
+--------------------------------------------------------------------------------------------------------------------------
 03/18/2026
 --------------------------------------------------------------------------------------------------------------------------
 Agenda:
