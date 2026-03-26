@@ -9,9 +9,227 @@ CREATING E2E program at the end (contains nodejs, express, cypress everything)
 --------------------------------------------------------------------------------------------------------------------------
 03/26/2026
 --------------------------------------------------------------------------------------------------------------------------
+	E2E application- CRUD
+		Assisted practice: understand code and implemnet update operation
+
+	API Classification (Accessibility based, architecture based)
 
 
-E2E application- CRUD
+
+API Fundamentals
+	mechanism that allows two systems to communicate and exchange data.
+
+
+Mobile App --> request data
+Backend API -> Sends data
+
+Request:
+	URL, Header, BOdy, Params
+
+	GET /api/expenses
+
+Advantage:
+	- Reusability
+		Same api can be consumed by Web, Mobile, or Third party application
+
+	- Scalability
+		Backend and frontend can scale independenty
+
+	- Seperation of concern
+
+
+Challenges:
+	- Security risks	
+		Needs protection (JWT, Oauth2..)
+			Authentication and authorizaton
+
+	- Complexity
+		Versions - /api/expense
+		Documentations -
+
+	- Latency
+		Network calls and delay
+
+
+Applications of API
+	Web & Mobile Apps
+
+
+Payment systems
+	Razorpay, stripe...
+
+
+Maps and Location
+	Google Map API
+
+Cloud Services
+	AWS APIs
+
+Enterprise communication
+	Microservice communicaiton
+
+
+API Classification
+
+Based on Open APIs (Public APIs)
+
+	- APIs that are available to everyone on the internet
+
+ Key characteristics:
+ 	- Publicly available
+ 	- Usually requires API key
+ 	- well documented
+
+ Weather api
+
+ 	GET /api/weather?city=Bangalore
+
+ Examples:
+ 	- Goole maps api
+ 	- payment gateways
+ 	- weather services
+
+
+ Razorpay
+ 	-> user can register them self
+ 		API Key - secretly
+
+ 	-> /payment --> 
+ 		with API key
+
+
+
+
+
+Internal APIs (Private APIs)
+	APIs used only inside an organization.
+
+	Internal APIs are used within a company to enable communication between internal systems.
+
+	clients             		Server
+	ReactJS Place order			POST /placeorder  Nodejs
+								order ms        inventory service.    paymentgateway service.     tracking service   notification service
+
+
+
+Characteristics:
+	- Not publicly exposed
+	- Used by internal teams/services
+	- More secure
+	- No public documentation is needed
+
+Partner API
+	API shared with specific external organization (partners) under controlled access.
+
+	Oauth2, JWT
+
+	Usecases
+		- Logistics 
+		- Payment gateway
+
+
+
+API based on its Architecture
+-------------------------------
+	
+	SOAP (Simple Object Access Protocol)
+		Built on top of HTTP Protocol
+		A protocol is used to exchange structured information between systems using XML
+
+	Strict , XML based, Protoco driven API
+
+	You will be
+
+	WSDL - Web Service Description Language
+
+
+		Defines:
+			- API structure
+			- Request/Response format
+			- Methods Available
+
+
+	client first create XML request
+	Send req to SOAP endpont
+	Server process reqeust
+	Returns XML response
+	client parse XML
+
+	Built-in security
+		WS-Security
+		Encrypted
+		Digital signature
+
+	Stateful architecture
+
+
+REST (Representative State Transfer)
+	HTTP based
+
+	Pricipal:
+		1. Resource based
+
+
+	Advantage:
+		1. Simple and easy
+		2. Lightweight
+		3. Scalable
+		4. Widely adopted in industry (microservice)
+		5. Flexible
+
+
+
+GraphQL
+	A query language for APIs where client decides what data it wants
+
+	Clinet controlled data fetching API
+
+	Incase of REST
+		Serer decides response structure
+
+
+	In case of GraphQL
+		Client decides response structure
+
+
+
+Concepts:
+ 1. Single endpont
+
+ 2. Query(Read data)
+   {
+   expenses {
+	   title
+	   amount
+	   }
+   }
+
+Clinet selects fields
+
+3. Write Mutation Data
+
+mutation {
+	addExpense(title: food, amoutn: 200){
+		id,
+		title
+	}
+}
+
+Advantage:
+	- No Over-fetching of data
+	- No Under fetching
+	- Single endpont
+	- Flexible for frontend
+	- Efficient for complex applications
+
+Disadvantage
+	- Complexity
+	- Performanceissues
+		Your complex queries can be very heavy
+
+	- Caching is difficult
+
+	
 
 --------------------------------------------------------------------------------------------------------------------------
 03/24/2026

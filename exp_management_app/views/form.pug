@@ -1,0 +1,12 @@
+extends layout 
+
+block content 
+    .card 
+        h1 Add New Expense
+
+        form(action="/expenses" method="POST")
+            input(type="text" name="title" placeholder="Expense Title" required)
+            input(type="number" name="amount" placeholder="Expense Amount" required)
+            button(type="submit") Add Expense
+
+            

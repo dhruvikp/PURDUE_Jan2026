@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  .card
+    h1 Expense List
+
+    table.table
+      tr
+        th Title
+        th Amount
+        th Action
+
+      each exp in expenses
+        tr
+          td #{exp.title}
+          td ₹#{exp.amount}
+          td
+            a.delete-btn(href=`/delete/${exp.id}`) Delete
+
+    br
+    a(href="/") Add New Expense
