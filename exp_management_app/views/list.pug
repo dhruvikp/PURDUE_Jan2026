@@ -8,14 +8,22 @@ block content
       tr
         th Title
         th Amount
+        th Receipt
         th Action
 
       each exp in expenses
         tr
           td #{exp.title}
           td ₹#{exp.amount}
+          td 
+            if exp.file
+              span #{exp.file}
+            else
+              span No file
           td
-            a.delete-btn(href=`/delete/${exp.id}`) Delete
+            a.delete-btn(href=`/delete/${exp.id}`) Delete |
+            a(href=`/edit/${exp.id}`) Edit 
 
     br
-    a(href="/") Add New Expense
+    a(href="/") Add New Expense |
+    a(href="/logout") Logout

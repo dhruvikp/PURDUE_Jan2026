@@ -14,3 +14,16 @@ exports.getAll = async () => {
 exports.delete = async (id) => {
     await db.query('DELETE FROM expenses WHERE id = ?', [id]);
 }
+
+
+exports.getById = async (id) => {
+  const [rows] = await db.query("SELECT * FROM expenses WHERE id = ?", [id])
+  return rows[0]
+}
+
+exports.update = async (id, { title, amount }) => {
+  await db.query(
+    "UPDATE expenses SET title = ?, amount = ? WHERE id = ?",
+    [title, amount, id]
+  )
+}

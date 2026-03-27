@@ -41,3 +41,23 @@ exports.deleteExpense = async (req, res, next) => {
         next(err);
     }
 }
+
+
+exports.showEditForm = async (req, res, next) => {
+  try {
+    const expense = await model.getById(req.params.id)
+    res.render('edit', { expense })
+  } catch (err) {
+    next(err)
+  }
+}
+
+
+exports.updateExpense = async (req, res, next) => {
+  try {
+    await model.update(req.params.id, req.body)
+    res.redirect('/expenses')
+  } catch (err) {
+    next(err)
+  }
+}

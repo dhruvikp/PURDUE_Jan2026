@@ -6,6 +6,256 @@ CREATING E2E program at the end (contains nodejs, express, cypress everything)
 	communicate with DB (mysql)
 
 
+
+--------------------------------------------------------------------------------------------------------------------------
+03/27/2026
+--------------------------------------------------------------------------------------------------------------------------
+
+Types of API based on Availability
+	- Web APIs
+	- Database APIs
+	- Composite APIs
+
+
+Postman 
+Implementation - Github public API fetch profile info
+
+Open AI 
+	
+Multi processing with Node Cluster - impl
+
+Update, Login/Logout implementaiton
+
+--------------
+Web API
+	
+	An API that can be accesible over internet using HTTP/HTTPs
+
+	Client(Browser/Mobile) --> web API endpiont (/api/expenses) --> Server processing --> Response (XML/JSON) --> client
+
+
+	Ex:
+	REST API
+	SOAP API
+	GRPAHQL API
+
+
+Database APIs
+	interface that allows applications to interact with database (read, write, update, delete data)
+
+
+	Without using DATABASE API:
+
+		App -> Raw SQL -> Database
+
+	With Database API
+	APp -> Database API -> Database
+
+
+Purpose:
+	- Simplifies DB Interaction
+	- Improves scalability
+	= Abstract away SQL complexity
+
+
+Types of DB apis
+1. Low level APIs (Direct queries)
+
+	db.query("SELECT * from Expenses")
+
+2. ORM (Object Relational Mapping)
+
+	Maps DB tables => Object
+
+	Ex: 
+		Sequenlize (Node js)
+		Hibernate (JAVA)
+
+		save(obj)
+
+3. Query Builders
+	Knex.js
+
+	knex("expenses").select(*)
+
+
+	Flexible
+	safer than raw sql
+
+
+Advantage:
+1. Abstract away DB handling
+2. Security
+3. Manitainability 
+4. Reusability
+
+Disadvantage:
+	1. Performance overhead
+	2. Learning curve
+
+
+Composite APIs
+	API that combine multiple operations or services into a single request.
+
+
+	Client -> Composite API endpoint -> calls multiple services internally --> Combines results --> Returns single response.
+
+
+
+Postman
+	Tool to design, build, test and manage APIs
+
+	WHy Postman is used?
+
+		- Testing before frontend is ready
+		- No code API intereraction
+		- Automation and reliability
+		- Envieronment management
+		- Automatic documentation 
+
+
+
+	Open AI
+		Provides AI models via APIs
+
+	These models:
+		- Generate Text (ChatGPT)
+		- Write code
+		- Summarize content
+		- Answer Questions
+		- Generate images
+		- Analyse data
+
+	GPT models (ChatGPT)
+
+
+Practical use cases:
+	Customer support bot
+	- Resume analyzer
+	- Financial Assistatnt
+	- Auto content generator
+
+
+	npm install openai
+
+	import OpenAI from "openai";
+
+
+	const openAI = new OpenAI({
+		apiKey: "YOUR_SECRET"
+	});
+
+
+	const response = await openai.responses.(create)({
+		model: "gpt-4.1-mini",
+		input: "Explain nodejs in simpler terms"
+	});
+
+	console.log(response.output[0].content[0].text)
+
+	}
+
+
+Multiprocessing
+---------------
+	
+	By default, node.js is single threaded.
+
+	One thread -> Event loop -> handles all requests
+
+	Problem:
+		- CPI Heavy task blocks whole eventloop
+		Ex:
+			- Image processing
+			- Large calculations
+
+	Solution:
+		Multiprocessing
+
+		The solution is to run multiple processes in parallel.
+
+		Main process -> child process -> Parallel execution
+
+Built in module - 'child_process'
+
+	spawn - Used to run large processes or streaming data
+
+			- Returns stream (stdout, stderr)
+			- Efficient for large data
+
+	fork
+		A special mehtod for Nodejs processes
+
+		- Used for node scripts only
+		- Enable IPC (inter process communication)
+
+
+
+
+	exec
+		Runs commands in the shell
+
+		- Buffers entire output
+		- Simpler
+		- Not good for large data.
+
+		Usecase:
+			- small commands executions as separate process
+			- Quick scripts
+
+
+	execFile		
+		Runs an executable without a shell
+
+		- Faster than exec
+		- More secured
+
+		Usecase
+			- Running binary files
+			- Secure execution
+
+
+Node Cluster?
+	Cluster allows Nodejs to:
+		Use multiple CPU Cores by creating multiple processing (workers)
+
+		Cluster = Run multiple Nodejs processes to handle more load
+
+		1 cpu core -> 1 node process -> Limited performance
+
+		11 core CPU -> Node uses only 1 core
+
+		Remaining 7 core are wasted.
+
+
+		Solution?
+			1 master process
+
+				Multiple worker processes (per CPU core)
+
+
+				Each worker:
+					- Runs your app
+					- Handles requests
+
+		Master Process:
+			- Manage workers
+			- Distributes requests
+
+		Worker processes:
+			- Runs your server
+			- handle requets
+
+
+
+cooke-parser
+
+			process and popluate req.cookies --> with key-value pari
+
+
+npm install cookie-parser
+
+
 --------------------------------------------------------------------------------------------------------------------------
 03/26/2026
 --------------------------------------------------------------------------------------------------------------------------
