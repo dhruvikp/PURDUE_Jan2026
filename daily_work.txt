@@ -2,8 +2,204 @@ Purdue_Daily_work2026
 https://github.com/dhruvikp/PURDUE_Jan2026
 
 
-CREATING E2E program at the end (contains nodejs, express, cypress everything)
-	communicate with DB (mysql)
+
+--------------------------------------------------------------------------------------------------------------------------
+03/27/2026
+--------------------------------------------------------------------------------------------------------------------------
+	What is cypress?
+	Key features
+	Cypress Architecture
+	Setup simple project understand key files and understand basics
+
+	Cypress Configuration
+	HTML Locators and selectors
+	Create HTML file and explore selectors
+
+	Practice (Home Fun): Ask learners to implement same in expense management app.
+
+Cypress?
+------------
+	Cypress is a JavaScript based end-to-end testing framework used to test modern web application.
+
+	It allows you to test:
+		- UI (User interface)
+		- APIs (backend calls)
+		- Full flows (login -> dashboard -> logout)
+
+
+	Why Cypress?
+		1. End-To-End testing
+
+				cy.visit("/login");
+				cy.get("#email").type("test@gmail.com")
+				cy.get("#password").type('12345')
+				cy.get("button").click();
+
+
+		2. API testing
+
+			cy.request('GET', '/api/users')
+
+		3. Key features
+				- Automatic waiting -  No manual waits needed
+				  login button 
+					flow to wait for dashboard page to come up 
+				- Easy debugging
+				- Cross browser support
+				- Screenshots and Videos
+				- Network interception
+					React -> invokes actual APIs
+
+					capture request -> help you to return some dummy data there.
+					Avoid calling actual API
+
+					Focus on testing your react/angular applications.
+
+
+How Cypress Works?
+
+	2 parts:
+		1. Browser -> Runs tests + interact with the UI
+
+				Handles:
+					DOM
+					UI Interaction
+					Assertions
+
+					Ex:
+					cy.visit('http://localhost:3000')
+					cy.get('button').click()
+
+					Direct access to the DOM
+
+
+		2. Node js server -> which handles backend tasks
+
+				Handles:
+					- OS operations
+					- Plugins
+					- File System
+					- External integrations etc
+
+			Cypress internally manage internal communication channel between browser and Node
+			Browser -> Node -> DB -> Node -> Browser
+			cy.task('dbQuery');
+
+
+Why Cypress is very fast?
+	-Runs inside browser
+		- No network delay
+		- No extternal webdriver dependency (selenium)
+
+	Ex(Selenium):
+		Test -> Driver -> Browser -> Response -> Driver --> Test
+		slow
+
+	Cypress
+		Test & Browser at the same place
+		Fast
+
+Architecture:
+	Slide
+
+Limitations:
+	- No multi-tab support
+	- Limited Corss origin support
+	- No native mobile app testing support
+
+
+
+Setup project:
+	
+
+mkdir cypress-hello
+cd cypress-hello
+npm init -y
+npm install cypress --save-dev 
+npx cypress open
+	- E2E Testing select
+	- Choose Chrome browser
+
+	Cypress will automaticallly generate project structure and initiate web socket connection as explined earlier.
+
+Understand project structure:
+	1. cypress/e2e/ --> Main Testing folder
+
+		Contains your actual test cases
+
+		ex:
+		hello.cy.js
+			describe('TestSuite name' , () => {
+				
+				it('scenario-1', () => {
+					steps 
+				})
+
+				it('scenario-2', () => {
+					steps 
+				})
+
+				it('scenario-3', () => {
+					steps 
+				})
+
+			})
+
+
+	2. cypress/fixtures/ -> (Test data)
+
+		Store static test data (JSON)
+
+		user.json 
+		{
+			email: 'dhruvik@simplilearn.com'
+			password: '12345'
+		}
+
+		cy.fixture('user').then((data)=> {
+			cy.get("#email").type(data.email)
+		})
+
+		Allows:
+			- Data driven testing
+			- utilise same test to executed based on test data
+			- clean code
+
+	3. cypress/support (Reusable Logic)
+
+		Purpose:  store custom commands + setup code
+
+		command.js
+			custom reusable functon
+
+			Ex:
+
+				Cypress.commands.add('login_drk', () => {
+					cy.visit(/login)
+					cy.get('#email').type('test@simp.com')
+					..
+					cy.get('button').click()
+				})
+
+
+				Under your test file
+				cy.login_drk()
+
+			e2e.js
+				Runs before every test file
+
+
+	4. cypress/downloads
+		Purpose: Stores downloaded files during tests
+
+
+	5. cypress.config.js
+		e2e: {
+			baseUrl: 'http://example.cypress.io',
+			specPatterns: 'cypress/e2e/**/*.cy.js'
+			viewPortWidth: // screen size
+			defaultCommandTimeout: 
+		}
 
 
 
@@ -254,6 +450,55 @@ cooke-parser
 
 
 npm install cookie-parser
+
+HTML Locators
+
+	1. ID Locator
+		<input id='username' />
+
+		cy.get("#username")
+
+
+2. Class Locator:
+	<input class = "input-filed">
+
+		cy.get('.input-field')
+
+3. Name Attribute Locator
+	<input name ='email'/>
+
+	cy.get('[name=email]')
+		uses attribute selector based on attribute name
+
+	cy.get('[id ^= "user"]') - Stats with
+	cy.get('[id $= "name"]') - End with
+	cy.get('[id *="ser"]').  - contains
+	....
+
+
+ 4. Text locator
+ 	<button> Login </button>
+
+ 	cy.contains('Login')
+
+ 5.By Tag
+ 	<input>
+ 	<button>
+
+ 	cy.get('input')
+ 	cy.get('button')
+
+ 	6. Combination Locator
+
+ 		<input id='username' class = 'input-field'>
+
+
+ 		cy.get('input#username.input-field')
+
+ 7.Custom data attribute
+ 	<input data-cy='username'/>
+
+ 	cy.get('[data-cy=username')
 
 
 --------------------------------------------------------------------------------------------------------------------------
