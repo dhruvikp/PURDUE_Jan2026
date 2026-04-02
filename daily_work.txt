@@ -2,6 +2,330 @@ Purdue_Daily_work2026
 https://github.com/dhruvikp/PURDUE_Jan2026
 
 
+--------------------------------------------------------------------------------------------------------------------------
+02/04/2026
+--------------------------------------------------------------------------------------------------------------------------
+Writing and Structuring Cypress Tests
+Organizing and Running Cypress Test suites
+Challenge of Test Execution Flow : Test flakiness
+How to Reduce Test flakiness in cypress
+
+Integrating Reporting Tools and Visual Testing in Cypress
+Integrating Cypress Tests with Cloud
+Working with Page Object Model (POM) in Cypress
+
+Integrate POM pattern in writing test in Expense Management Application
+
+
+1. Writing and Structuring Cypress Tests
+
+		- Setup
+				Prepare the environment and initial state
+					Ex:
+						- Open the application
+						- Login (if required)
+						- Prepare Test data
+						- Set application state
+
+		- Exercise (Action)
+				Perform the action you want to 
+					Ex:
+						- click button
+						- Typing input fields
+						- Navigate through pages
+		- Assertions
+				Verify expected outcome
+
+					Ex: 
+						cy.get('#result').should('contains', 'success')
+
+		- Teardown
+				Cleanup test data and reset state (if required)
+
+
+					clear cookies
+
+		Hooks
+			Cypress provides Mocha Style hooks to manage test lifecycle
+
+				Mocha - opensource JS test framework --> designed to run on node js and in the browser.
+
+							descrive() -> Group related tests
+							it() -- Define individual test case , your actual logic/assertions
+
+							Hooks: before, after, beforeEach, and afterEach
+
+			before() 			- Runs once before running All Tests
+			beforeEach()  - Runs before Every test
+			after()       - Runs once after All Tests
+			afterEach()   - Runs After Every test
+
+	Grouping Cypress Tests into Suites
+		Test Suites Improves:
+			- Organization
+			- Scalability
+			- Maintainability
+
+		npx cypress run --spec ""
+
+	Best Practice for maintainable cypress Tests:
+		- Use Stable selectors
+		- Keep your tests indendent
+		- Avoid hard waits
+			cy.wait(5000)
+			Instead:
+				cy.get('#msg').should('be.visible')
+		- Use Page Object Model Design pattern
+
+		- Resuse commands
+
+
+	Understanding Mocha's Role in Cypress
+		Mocha - Test structure (describe, it, hooks)
+		chai -> Assertions (Should, expect)
+
+
+Challenge - Flakiness
+
+	Flaky tests = TEsts that pass/fail randomnly
+
+	Common causes:
+		1. Slow network
+		2. External service issues
+		3. Dynamic Test Data
+		4. Shared state between Tests
+		5. Elements not loaded
+				cypress tries to click too early
+
+	How To REduce Test Flakiness
+		1. Use .should() for readiness
+
+			cy.get('#btn').should('be.visible').click()
+
+			retries untill condition passes
+
+		2. Extend Retry logic
+			config:
+				defaultCommandTimeout: 8000
+
+		3. Isolate TEsts
+
+			Each test should start fresh
+
+		4.  Use stable selectors
+
+		<button data-cy = "login-btn">Login</button>
+
+		5. DOM based flakiness reduce (using get and find)
+
+			parent
+				child --> click
+
+				cy.get('parent').find('child').click()
+
+			cy.get('parent').should('exist').find('child').should('be.visible').click()
+
+		6. Reduce API based Flakiness
+				cy.intercept()
+
+				API response is slow/unreliable
+				Tests fail randomnly
+
+
+				cy.intercept('GET', '/api/users', {
+					statusCode: 200,
+					body: [{name: 'John'}]
+				}).as('getUsers')
+
+
+				cy.visit('/users')
+
+				cy.wait('@getUsers')
+
+				cy.contains('John').should('be.available')
+
+		7. Reduce Test Flakiness using Cypress Dashboard
+
+				Cloud
+					- Records test runs
+					- Shows flaky tests
+					- Provides screenshots/videos
+					- Tracks failure patterns
+
+
+Reporters:
+	In Cypress, reporters are used to:
+		- Generate test reports
+		- Integrate with CI/CD tools
+		- Provides insights (pass/fail, screenshots, logs etc)
+
+
+	Cypress uses inbuilt Mocha's default reporter
+
+	Spec Reporter
+		- Mochawesome
+		- JUnit
+		- TeamCity
+
+
+
+How to implement Mochawesome reporter?
+	- npm install mochawesome mochawesome-merge mochawesome-report-generator --save-dev
+
+
+Merge two reports into single report"
+	- npx mochawesome-merge cypress/reports/*.json >merged-report.json
+
+Generate HTML report:
+	npx marge merged-report.json
+
+
+Reporting Tool: JUnit
+	Used in CI/CD tools like Jenkins, Github Actions
+
+
+	npm install mocha-junit-reporter --save-dev
+
+
+	configure:
+		module.exports = {
+			reporter: 'mocha-junit-reporter',
+			reporterOptions: {
+				mochaFile: 'cypress/results/junit.xml'
+			}
+		}
+
+
+Reporting Tool: TeamCity (CI/CD server - JetBrains)
+	npm install mocha-teamcity-reporter --save-dev
+	reporter: 'mocha-teamcity-reporter'	
+
+
+Visual Regression Testing (cypress-image-diff)
+
+	Used to compare UI changes (pixellevel testing)
+
+Why needed?
+	- UI Breaks
+	- CSS Changes
+	- Layout issues
+
+npm install cypress-image-diff --save-dev
+
+	config:
+		const getCompareSnapshotsPlugin = require('cypress-image-diff-js/plugin')
+
+
+		 getCompareSnapshotsPlugin(on, config) {
+        return config;
+    },
+
+    first run - baseline images crated
+    Next runs -> Compared with baseline images
+    Difference? -> Test fails..
+
+
+Integrating Test Suites with Cloud
+----------------------------------
+	Running tests locally is fine, but cloud gives you:
+		Benefits:
+			- Run tests on multiple browsers 
+			- Parallel execution - faster results
+			- No need to maintain infrastructure
+			- Access to real devices (Mobie + desktip)
+
+
+	1. LambdaTest (Now TestMu AI)
+			
+			Features:
+				- 3000+ browser/device combinations
+				- Cypress support with parallel runs
+				- CI/CD integrations (Jenkins, Github)
+
+			Create account on LambdaTest (signup)
+				download:  username, access_key
+
+
+			npm install -g lambdatest-cypress-cli
+
+			lambdatest-cypress init
+				creates:
+					lambdatest-config.json
+
+					{
+					"lambdatest_auth": {
+						"username": 'YOUR_USERNAME',
+						"access_key": "YOUR_ACCESS_KEY"
+					},
+					"run_settings": {
+						parallel:3
+					}
+					}
+
+			Runs:
+				lambdatest-cypress run
+
+
+	2. BrowserStack
+
+			Features:
+				- Real browsers and devices
+				- Strong cypress integration
+				- video recording + logs
+
+			npm install -g browserstack-cypress-cli
+
+			browserstac-cypress init
+
+			{
+			"auth": {},
+
+			browsers: [
+				{
+					"browser": "chrome",
+					"os": "windows 10"
+				},
+				{
+					"browser": "firefox",
+					"os": "windows 10"
+				}
+			]
+			}
+Runs:
+	browserstack-cypress run
+
+
+3. Sauce Labs
+	Features:
+		- Enterprise grade testing
+		- Real devices + emulating
+		- Advance debging options
+
+
+	POM - Page Object Model
+	A design pattern where:
+		 - UI Elements + actions are separated from test logic
+
+	Why use POM?
+		- Reusable code
+		- clean tests
+		- Easy maintainance
+		- Less duplications
+
+	cypress
+		e2e/
+			tests/
+				login.cy.js
+		pages/
+			LoginPage.js
+				visit(), enterUsername, enterPassword, clickLogin, VerifyLoginSuccess...
+			DashboardPage.js
+		support/
+			commands.js
+
+
+
+
 
 --------------------------------------------------------------------------------------------------------------------------
 03/27/2026

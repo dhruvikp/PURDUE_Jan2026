@@ -5,8 +5,8 @@ block content
         h1 Add New Expense
 
         form(action="/expenses" method="POST")
-            input(type="text" name="title" placeholder="Expense Title" required)
-            input(type="number" name="amount" placeholder="Expense Amount" required)
-            button(type="submit") Add Expense
+            input(type="text" name="title" placeholder="Expense Title" required data-cy="expense-name")
+            input(type="number" name="amount" placeholder="Expense Amount" required data-cy="expense-amount")
+            button(type="submit" data-cy="save-expense") Add Expense
 
-            a(href="/expenses") View All Expenses   
+            a(href="/expenses" data-cy="view-expenses") View All Expenses   

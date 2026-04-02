@@ -5,8 +5,8 @@ block content
     h1 Edit Expense
 
     form(action=`/edit/${expense.id}` method="POST")
-      input(type="text" name="title" value=expense.title)
-      input(type="number" name="amount" value=expense.amount)
-      button(type="submit") Update
+      input(type="text" name="title" value=expense.title data-cy="expense-name")
+      input(type="number" name="amount" value=expense.amount data-cy="expense-amount")
+      button(type="submit" data-cy="save-expense") Update
 
     a(href="/expenses") Back

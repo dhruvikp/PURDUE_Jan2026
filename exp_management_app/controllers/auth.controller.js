@@ -10,7 +10,7 @@ exports.login = (req, res) => {
     return res.redirect('/expenses')
   }
 
-  res.send("Invalid credentials ❌")
+  res.send("<p data-cy='error'>Invalid credentials ❌ </p>")
 }
 
 exports.logout = (req, res) => {

@@ -1,0 +1,182 @@
+{
+  "stats": {
+    "suites": 2,
+    "tests": 3,
+    "passes": 3,
+    "pending": 0,
+    "failures": 0,
+    "testsRegistered": 3,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false,
+    "start": "2026-04-02T00:39:33.081Z",
+    "end": "2026-04-02T00:39:38.077Z",
+    "duration": 4996
+  },
+  "results": [
+    {
+      "uuid": "0146fb6c-182a-48ba-a0d1-fe710dbdd911",
+      "title": "",
+      "fullFile": "cypress/e2e/locator-html.cy.js",
+      "file": "cypress/e2e/locator-html.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "c9658b70-ec0b-4e82-a091-16decc577611",
+          "title": "HTML Locator Demo",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Should test all locator types",
+              "fullTitle": "HTML Locator Demo Should test all locator types",
+              "timedOut": null,
+              "duration": 1041,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "//Steps:\n//1. Visit the webpage\ncy.visit('http://127.0.0.1:5500/public/index.html');\n// 2. ID Locator\ncy.get('#username').type('Dhruvik');\n// 3. Name Locator\ncy.get('[name=\"password\"]').type('password123');\n// 4. Attribute selector\ncy.get('[type=\"submit\"]').click();\n// 5. Link Text Locator\ncy.contains('Forgot Password?').click();\n// 6. Tag locator\ncy.get('input').should('have.length', 3);\n// 7. Custom attribute\ncy.get('[data-cy=\"email\"]').type('dhruvik@example.com');",
+              "err": {},
+              "uuid": "5d617fad-b106-48bb-87c4-9f6507cb2280",
+              "parentUUID": "c9658b70-ec0b-4e82-a091-16decc577611",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "5d617fad-b106-48bb-87c4-9f6507cb2280"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 1041,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    },
+    {
+      "uuid": "a3cd3862-58e1-479b-a3cb-a7bd6c0edfa3",
+      "title": "",
+      "fullFile": "cypress/e2e/hello.cy.js",
+      "file": "cypress/e2e/hello.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "831de5e8-2768-49a0-8d20-877dea5ef1c9",
+          "title": "Hello Cypress",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Should open website and verify its title",
+              "fullTitle": "Hello Cypress Should open website and verify its title",
+              "timedOut": null,
+              "duration": 909,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.visit('https://example.cypress.io'); // Adjust the URL as needed\ncy.title().should('eq', 'Cypress.io: Kitchen Sink');",
+              "err": {},
+              "uuid": "482027d4-5fc2-46f6-86d9-574500c8a11a",
+              "parentUUID": "831de5e8-2768-49a0-8d20-877dea5ef1c9",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Should open website and verify its title1",
+              "fullTitle": "Hello Cypress Should open website and verify its title1",
+              "timedOut": null,
+              "duration": 75,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.visit('https://example.cypress.io'); // Adjust the URL as needed\ncy.title().should('eq', 'Cypress.io: Kitchen Sink');",
+              "err": {},
+              "uuid": "3628e0a3-de63-4573-8f44-3d64f970d3ea",
+              "parentUUID": "831de5e8-2768-49a0-8d20-877dea5ef1c9",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "482027d4-5fc2-46f6-86d9-574500c8a11a",
+            "3628e0a3-de63-4573-8f44-3d64f970d3ea"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 984,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.3.2"
+    }
+  }
+}

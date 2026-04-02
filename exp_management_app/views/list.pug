@@ -21,9 +21,9 @@ block content
             else
               span No file
           td
-            a.delete-btn(href=`/delete/${exp.id}`) Delete |
-            a(href=`/edit/${exp.id}`) Edit 
+            a.delete-btn(href=`/delete/${exp.id}` data-cy="delete") Delete |
+            a(href=`/edit/${exp.id}` data-cy="edit") Edit 
 
     br
-    a(href="/") Add New Expense |
-    a(href="/logout") Logout
+    a(href="/" data-cy="add-expense") Add New Expense |
+    a(href="/logout" data-cy="logout") Logout

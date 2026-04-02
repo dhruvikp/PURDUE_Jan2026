@@ -1,0 +1,105 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-04-02T01:27:03.626Z",
+    "end": "2026-04-02T01:27:05.121Z",
+    "duration": 1495,
+    "testsRegistered": 1,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "28971e7b-2856-4bc6-9c9d-6ac560cef23b",
+      "title": "",
+      "fullFile": "cypress/e2e/locator-html.cy.js",
+      "file": "cypress/e2e/locator-html.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "17c426c4-7229-4564-af26-6ab3f6966cc0",
+          "title": "HTML Locator Demo",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Should test all locator types",
+              "fullTitle": "HTML Locator Demo Should test all locator types",
+              "timedOut": null,
+              "duration": 1007,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "//Steps:\n//1. Visit the webpage\ncy.visit('http://127.0.0.1:5500/public/index.html');\n// 2. ID Locator\ncy.get('#username').type('Dhruvik');\n// 3. Name Locator\ncy.get('[name=\"password\"]').type('password123');\n// 4. Attribute selector\ncy.get('[type=\"submit\"]').click();\n// 5. Link Text Locator\ncy.contains('Forgot Password?').click();\n// 6. Tag locator\ncy.get('input').should('have.length', 3);\n// 7. Custom attribute\ncy.get('[data-cy=\"email\"]').type('dhruvik@example.com');",
+              "err": {},
+              "uuid": "f154d0a2-dfc7-4095-84f9-8d2442f20a54",
+              "parentUUID": "17c426c4-7229-4564-af26-6ab3f6966cc0",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "f154d0a2-dfc7-4095-84f9-8d2442f20a54"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 1007,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.3.2"
+    }
+  }
+}

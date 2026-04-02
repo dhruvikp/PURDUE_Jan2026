@@ -3,6 +3,6 @@ block content
     h2 Login
 
     form(action="/login" method="POST")
-      input(type="text" name="username" placeholder="Username")
-      input(type="password" name="password" placeholder="Password")
-      button(type="submit") Login
+      input(type="text" name="username" placeholder="Username" data-cy="username")
+      input(type="password" name="password" placeholder="Password" data-cy="password")
+      button(type="submit" data-cy="login") Login
