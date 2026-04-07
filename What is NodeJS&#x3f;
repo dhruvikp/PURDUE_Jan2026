@@ -1,0 +1,392 @@
+What is NodeJS?
+Benefits of NodeJS
+Applications of NodeJS
+
+Extending Nodejs with packages
+package
+package manager
+npm
+public npm registary
+working with npm
+npm global installation
+project initialization with npm init
+understanding package.json structure
+
+
+Setup hello world project
+
+
+The building block of nodejs
+	- core concepts behind nodejs
+		- Asynchronous
+		- Non-Blocking I/O
+
+Working of NodeJs
+	- Request enter to NodeJs (EventQueue)
+	- Event Loop
+	- Thread Pool : handling heavy work
+	- Callback execution and response
+	- NodeJs execution model
+
+Exploring Libuv
+
+Node Server
+	Introduction to HTTPModule
+		- Handles client requests (GET, POST, PUT, Delete)
+		- Send custom responses(HTML, JSON, status codes)
+		- listen to specified ports for incoming traffic
+	Core methods of HTTPModule
+		- http.createServer()
+		- server.listen()
+		- res.writeHead()
+		- res.end()
+
+	Example createServer isten on 3000 port.
+
+	HttpStausCodes understanding
+	HttpResponseHeaders 
+	writeHead example
+
+	content-type
+	content-disposition
+
+Exploring the Node.js process object and events
+	nodejs process object
+	nodejs events
+
+	Event driven architecture in node.js
+	nodejs process events and their role
+		beforeExit
+		disconnect
+		exit
+		message
+		uncaughtException
+		uncaughtExceptionMonitor
+		unhandledRejection
+		warning
+		rejectionHandled
+	With example
+
+
+Request body example
+REsponse object WritableStream, 
+Sending response as an html example
+Routing
+
+Callstack funamentals
+callback queue
+  types: Time Queue, Microstack Queue, IO queue, Check queue, Close queue
+Event loop: moves function from callback queue to the call stack when stack is empty (Hoe event loop works)
+Asynchronous I/O in Node.js
+	Files, Streams, Pipes
+
+What are streams?
+	Types of stream, Writable, Readable, Duplex, Transform
+	Stream utility functions
+		pipeline(), Readable.form(), finished(), addAbortSignal()
+
+Understanding buffers in Nodejs
+Binary Data with example
+Character sets (ASCII , Unicode)
+Character Encoding (UTF-8)
+setEncoding function (character encoding supported: hex, base64, uc2, utf8, latin1, ascii)
+
+
+
+JavaScript Function
+ Common ways: (First-class Function, Function declaration, Function expression, Arrow Function expression)
+
+Function constructor (constructor function example)
+
+Ways to execute function (pass by value, pass by reference)
+
+IIFE (Immediately Invoked Function Expressions) with example
+Arrays
+Objects
+	- Object properties
+	- Assigning Object Properties
+	- Functions in Objects
+	- Object Literal
+	- Object.create()
+
+Understanding Prototype object
+Prototype Property
+Prototypal inheritance fundamentals with example
+reusing methods across objects using apply() and call() fundamentals with example
+
+=======================
+
+What are Nodejs modules?
+types of nodejs modules (Core modules, Local modules, third party modules)
+how to import and export modules in nodejs?
+Common module
+with example
+
+module.exports
+Export literals, export object, function as a class, function with example
+
+File management with fs module
+synchronous and asynchronous mehtods?
+key operations on fs with example (read, write, append)
+reading directory
+creating a directory
+check if file or directory exist
+
+Event management in Node.js
+what are events in Nodejs?
+Why Nodejs uses events?
+Events module
+what is event emitter?
+listening and emitting events
+
+Event emitter class with example
+two ways to work with event emitter (returning event emitter from function and inheiriting EventEmitter class)
+
+
+
+---------
+
+Day 4
+Error handling in nodejs
+Error handling techniques
+	- try...catch method
+	- Callbacks
+	- Promises
+	- EventEmitters
+
+
+Error handling with callbacks
+- single callback
+- callback chains	
+		- methods: async.parallel(tasks, callback)
+							 async.series(tasks, callback)
+
+Error handling with Promises
+Error handling with EventEmitters example
+
+
+Network funamentals for server side development
+Internet protocols
+	TCP/IP
+	Layers of TCP/IP
+	TCP/IP Communication
+	Addresses
+	Port Number
+	Classification of port numbers
+
+
+Dynamic application
+Template engine
+Advantage of Template engine
+Types of Template Engine
+	pug, Vash, EJS, Mustache, Dut.js, Nunjucks, Handle bars, atpl, haml
+
+Exposing server functionality APIs
+API Endpoints
+	- requirement (URL, method, header and body)
+Deploying Applications
+	- Heroku - features of Heroku
+	- Vercel - features of Vercel
+	Implementation
+
+Nodejs debugger with visual studio code editor
+
+Multiprocessing
+Child process
+ways to create child process (spawn(), fork(), exec(), execFile())
+
+Node.js cluster
+Methods of Node.js cluster (Round-robbin, Socket)
+Worker object in cluster with implementation
+
+
+
+==================
+Slide 6:
+Stream - Readable and writable stream
+APIs
+Routing
+Deploying app (Heroku and vercel)
+Multiprocessing(Spawn(), form(), exec(), execFile())
+Nodejs cluster (roudrobin, socket method)
+
+
+
+
+=====================
+
+What is Express JS?
+Feature of ExpressJS
+How ExpressJS works
+app.use()
+How Middleware flows in ExpressJS?
+ExpressJS Architecture
+CLI with NodeJS
+CLI with capability with features
+
+Explain MVC Architecture
+How MVC Framework Works?
+Routing
+Types of routing methods in expressjs
+GET, POST, 
+Route Pathways (String, String pattern, Regular Exp)
+Route Parameters
+Route Handlers
+Express JS Routers
+Routers as Mini App
+
+
+TemplateEngine
+	Common template engine (EJS, PUG, Mustache) 
+	PUG example
+Handling Static files, form data in Expressjs (using EJS)
+
+Handling Form data - creation of pug view 
+Server execution using Nodemon
+
+
+Error Handling in ExpressJS
+	Handle Synchronous/Asynchrnonous Errors
+	How does Express JS handle errors internally?
+		Passing errors thorugh middleware series
+		Error handling in Asynchronous callbacks
+	Why Async error can bypass express?
+	using promise for each handling
+	Role of error handling in JS
+	Chaining middleware to handle asynchronous errors
+	Error notification in Express
+	Express Default Error Handler
+	How to define Customer Error Handler? (err, req, res, next)
+	How to handle Errors after response starts?
+	Deletgate to default handler
+	error handler responses
+	Error handling without forwarding
+	Defining callback error handler
+	Using next(route) for conditional routing
+
+
+CRUD Operation End to End
+
+
+
+
+
+
+
+
+
+
+
+
+
+What is ExpressJS, and its features?
+Explain ExpressJS Architecture (middleware flows) in details
+
+What is MVC frameowrk?
+How MVC Framework works?
+Create simple hello world express js project
+
+ExpressJS Routing methods (GET/POST/PUT/DELETE)
+Routing pathways(String, String patterns, Regular Expressions)
+How can user pass params? and accept?
+Route Handlers
+Example?
+
+
+
+
+Writing and Structuring Cypress Tests
+	Logical sequence:
+		Setup
+		Exercise
+		Assertion
+		Teardown
+	Managing Test Phases in cypress
+		before, before Each
+		after , after each
+		write assertions inside it() blocks
+	Grouping Cypress Tests into suites
+		Method1: Use --spec in CLI to select and run specific test
+		Method2: Organize tests into folders to represents suites
+		Method3: Use support/index.js file and environment variable 
+
+	Best practice for writing maintainable tests
+
+Organizing and Running Cypress Test suites
+	creating test suite with describe()
+	Executing specific test suites from CLI
+	Understanding Mocha's role in cypress testing
+
+	Challenge of Test Execution Flow : Test flakiness
+		Test depend on slow network response
+		External services fail or delay intermittently
+		Test data is unstable or content is dynamic
+		The state is shared between tests without reset
+		Elements are not fully loaded before interaction
+
+	How to Reduce Test flakiness in cypress
+		Use should() to verify readiness 
+		Extend retry logic with Cypress.config
+		Isolate test with clean data and reset status
+		Avoud cy.wait()
+		Use stable selectors, not dynamic ones
+
+	How to Reduce DOM Based Flakiness (get and find)
+	How to reduce API based flakiness 	
+		cy.intercept()
+	How to reduce Flakiness using cypress dashboard
+
+Integrating Reporting Tools and Visual Testing in Cypress
+	Cypress Tooling Integration Using Reporters
+	Mocha's compatibility with Cypress
+
+	Reporting Tools: Mochawesome (Implementation)
+		Install Mocha
+		Install Mochawesome
+		Set the reporter in cypress.config.js
+
+		Mochawesome Utility Tool: mochawesome-merge
+
+	Reporting Tools: JUnit
+	Reporting Tools: TeamCity
+	Visual Regression Testing (cypress-image-diff)
+
+Integrating Cypress Tests with Cloud
+	Scaling cypress on the cloud
+	Tools:
+		LambdaTest
+		BrowserStack
+		Sauce Labs
+
+
+Working with Page Object Model (POM) in Cypress
+	Structure of Page Object File
+	Creating Page Object Class in Cypress
+	Using the Page Object in a Test File
+	Enhancing Page Object Model with Page Factory
+	App Actions in Test Automation
+	Page Object Model vs App Actions
+	Combining Page Object Model with App Actions
+	Example implementation
+
+	
+
+
+
+
+------------
+
+What is software Testing?
+Generative AI Requirement Analysis
+	Requirement Analysis
+	Test Planning
+	Test case development
+	Environment Setup
+	Test execution
+	Test cycle closure
+
+	
+
+
+
+

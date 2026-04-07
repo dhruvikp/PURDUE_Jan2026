@@ -1,7 +1,292 @@
 Purdue_Daily_work2026
 https://github.com/dhruvikp/PURDUE_Jan2026
 
+--------------------------------------------------------------------------------------------------------------------------
+07/04/2026
+--------------------------------------------------------------------------------------------------------------------------
 
+What is Software Testing?
+	
+	Software Testing is the process of verifying and validating that a software application.
+
+		- works as expected
+		- Meets business requirements
+		- Is free from any defects
+
+	Goals:
+		1. Verification (Are we building it right?)
+			- checking against design/spec
+			- Example: API returns correct status code
+
+		2. Validation (Are we building the right thing?)
+			- Checking against user needs
+			- Example: User actually can complete the checkout
+
+Phases:
+	1. Requirement Analysis
+		- Undersand requirements (funcitonal + Non-functional)
+		- Identify testable conditions
+
+		Clarify ambiguity
+			Indentify:
+				- Test scenarios
+				- Test Scopes
+				- Risk
+
+
+		AI Role 
+			- Break vauge requirment
+			- Generate edge cases
+			- Highlight missing scenarios
+
+	2.Test Planning
+		Defines how testing will be done?
+
+		Define:
+			- Scope
+			- Strategy
+			- Resources
+			- Timeline
+			- Tools
+
+		Output:
+			- Test plan document
+
+		AI 
+			- suggest testing strategy
+			- Estimate reisks
+			- Recommended tools
+
+	3. Testcase Development
+		Write step-by-step test cases
+
+		Structure of test case:
+			- Test case ID
+			- Scenario
+			- Steps
+			- Input
+			- Expected Result
+
+		AI
+			- Generate test caess
+			- Edge cases cover
+			- convert requirements - test cases
+
+	4. Environment Setup
+
+		prepare system for the testing
+
+		Includes:
+			- Test server
+			- Database
+			- APIs
+			- Tools (Postman, Selenium etc)
+
+		Ex:
+			- Test DB with dummy data
+			- Backed deployed in staging environment
+
+		AI:
+			- Suggest environment config
+			- Generate mock data
+
+	5. Test execution
+		Run Testcases
+
+		Activities:
+			- Execute test cases
+			- Log defects
+			- Track results
+
+		Ex:
+			TC01 - Pass
+			TC02 - Filed (bug found)
+
+		AI:
+			- Auto generate test scripts
+			- Analyse logs
+			- Predict flaky tests
+
+	6. Test Cycle Closure
+		Evaluates testing results
+
+		Activities:
+			- Test summary report
+			- Defect analysis
+			- Lession learned
+
+		Metrics:
+			- Pass %
+			- Defect density
+			- Coverage
+
+		Ex:
+			- 95% test cases passed
+			- 10 critical bugs fixed
+
+		AI:
+			- Generate reports
+			- Identify patterns in defects
+			- Suggest improvements
+
+
+*************************
+
+Requirement Analysis
+
+	A. Clarifying Requirements
+	B. Suggest focus area
+	C. Generate Acceptance criteria
+		Define when is this feature considered DONE?
+
+		Ususally written in Given/ When / Then format 
+
+	Ex:
+		User lOgin:
+
+			Given valid credentials - login success
+			Given invalid credentials - error shown
+
+
+Test Planning
+
+	Why it is critical?
+	 - Prevents random testing
+	 - Ensures coverage
+	 - Aligns team on strategy
+	 - Reduces risk early
+
+	REsponsibilities:
+	a. Defining the scope of testing
+	b. Setting Objectvies for Testing
+	c. Outlines testing strategies
+			Functional testing
+			Integration testing
+			Regression Testing
+			Performance Testing
+			Security Testing
+			Testing tools
+				Act as QA architech:
+
+				Recommend testing tools for the followign system
+
+				Consider:
+				 - Tech stack: Java/Spring Boot / Node/ etc
+				 - Type: Backend APIs
+				 - Need: Automation + Performance + CI/CD Integration
+
+				Provide justification for each tool.
+
+	D. Considering Industry standard
+
+		Follows best practices like:
+			- ISTQB Guidelines
+			- Agile/Deveops practices
+			- Security standared(OWASP)
+
+			Prompt:
+				Act as a QA Compliance expert.
+				Identify relevant industry standards and best practices for etsting followign system.
+
+				System:
+					Online banking application
+
+				Includes:
+					- Testing standareds
+					- Security guidelines
+					- Compliance consideration.
+
+	Test Case Development
+
+	Test Execution
+		Phase where
+			- Test cases are acutally run
+			- Results are validated
+			- Defects are identified and logged
+
+			POST /login with valid credential
+
+				Execution"	
+					- Sends request
+					- Validate response
+					- Check status code
+
+				Manuall traditiaonal way"
+					- Manually execution
+					- write script manually
+					- Debugging failures
+					- Log analysis 
+
+				With GEN AI:
+					- Aut0-generates scripts
+					- Faster debugging
+					- Smart result interpretations
+
+
+
+			Prompt Generate test script:
+				Generate automated test script for following API
+
+				INclude:
+					- Base setup
+					- Request paymload
+					- Assertions (status code, response body)
+					- Negative test cases
+
+				API Details:
+					POST /api/login
+					Request: 
+					{
+					"Email": "test@example.com"
+					"password": "password@123"
+					}
+
+
+			Intepreting test results
+
+				Prompt:
+					Analyse the following test execution result and provide:
+					 1. Root cause of faulure
+					 2. Possible reasons
+					 3. Suggested fix
+
+				Test result:
+					- Expected status: 200
+					- Actual status: 500
+					- Error: NullPointerException at UserSrevice.java: 45
+
+
+	Test Cycle Closure
+	Objectives:
+		- Is the product ready to release?
+		- What is the quality level?
+		- What risks remains?
+
+
+	Activites:
+		- Test summary report
+		- Defect analysis
+		- Metrix calcuations
+		- Lessio learned
+		- Sign-off decision
+
+
+	Prompt:
+		Generate Detailed test summary report based on following data:
+
+			Include:
+				- Total test cases
+				- Passed/failed
+				- Defect summary
+				- key risks
+				- release recommendataions
+
+			Data:
+				- Total test cases: 500
+				- Passed: 480
+				- Failed : 20
+				- Critical defects: 5
+				- High defects: 10
 --------------------------------------------------------------------------------------------------------------------------
 02/04/2026
 --------------------------------------------------------------------------------------------------------------------------
