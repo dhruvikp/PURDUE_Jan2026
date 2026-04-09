@@ -1,6 +1,76 @@
 Purdue_Daily_work2026
 https://github.com/dhruvikp/PURDUE_Jan2026
 
+
+--------------------------------------------------------------------------------------------------------------------------
+09/04/2026
+--------------------------------------------------------------------------------------------------------------------------
+
+LearnEase - LMS
+---------------
+
+	1. Admin manages courses
+
+		Meaning
+			- Add course
+			- Update course
+
+	2. Admin view Users
+		See all:
+			- Students 
+			- Faculties
+
+	3. Users see course details
+		 Course info page
+		 	- Title, Description, instructor
+
+	4. Learner(Student) request access
+
+			Student click on request enrollment
+
+	5. Faculty update course
+		Add content
+		Upload videos (optional)
+
+	6. Feedback and ratings	
+		Student should be able to rate courses
+
+	7. Group chat
+		Students discuss topics
+
+
+MovingCar
+	
+	1. Admin should be able to define AREA
+
+	2. Admin - View and manage all contact details
+
+	3. Customer
+		- Book cab
+
+	4. Customer
+		- dropdown where cabs are available
+
+
+User opens app
+	
+	Login/Register
+
+	Select car
+
+	Select source,destination description ...
+
+	making Payment
+
+	Booking data saved in DB
+
+	Tests thorugh AI to validate end to end
+
+
+
+
+
+
 --------------------------------------------------------------------------------------------------------------------------
 07/04/2026
 --------------------------------------------------------------------------------------------------------------------------
